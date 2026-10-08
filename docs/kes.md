@@ -6,11 +6,11 @@ This document explains how to enable KES with MinIO Operator.
 
 ### Prerequisites
 
-- MinIO Operator up and running as explained in the [document here](https://github.com/minio/operator#operator-setup).
+- MinIO Operator up and running as explained in the [document here](https://github.com/lgcorzo/operator#operator-setup).
 - KES requires a KMS backend
   in [configuration](https://raw.githubusercontent.com/minio/operator/master/examples/kes-secret.yaml). Currently KES
-  supports [AWS Secrets Manager](https://github.com/minio/kes/wiki/AWS-SecretsManager)
-  and [Hashicorp Vault](https://github.com/minio/kes/wiki/Hashicorp-Vault-Keystore) as KMS backend for production.S Set
+  supports [AWS Secrets Manager](https://github.com/lgcorzo/kes/wiki/AWS-SecretsManager)
+  and [Hashicorp Vault](https://github.com/lgcorzo/kes/wiki/Hashicorp-Vault-Keystore) as KMS backend for production.S Set
   up one of these as the KMS backend before setting up KES.
 
 ### Create MinIO Tenant
@@ -21,7 +21,7 @@ at [examples/tenant-kes-encryption](../examples/tenant-kes-encryption).
 You can install the example like:
 
 ```shell
-kubectl apply -k github.com/minio/operator/examples/kustomization/tenant-kes-encryption
+kubectl apply -k github.com/lgcorzo/operator/examples/kustomization/tenant-kes-encryption
 ```
 
 ## KES Configuration
@@ -34,7 +34,7 @@ The config offers below options
 
 | Field              | Description                                                                                                                                                                       |
 |--------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| spec.kes           | Defines the KES configuration. Refer [this](https://github.com/minio/kes)                                                                                                         |
+| spec.kes           | Defines the KES configuration. Refer [this](https://github.com/lgcorzo/kes)                                                                                                         |
 | spec.kes.replicas  | Number of KES pods to be created.                                                                                                                                                 |
 | spec.kes.image     | Defines the KES image.                                                                                                                                                            |
 | spec.kes.kesSecret | Secret to specify KES Configuration. This is a mandatory field.                                                                                                                   |

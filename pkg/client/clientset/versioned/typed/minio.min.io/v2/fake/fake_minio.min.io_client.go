@@ -19,7 +19,7 @@
 package fake
 
 import (
-	v2 "github.com/minio/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
+	v2 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )

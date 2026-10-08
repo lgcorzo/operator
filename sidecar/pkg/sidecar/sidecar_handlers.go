@@ -22,7 +22,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	"github.com/minio/operator/pkg/common"
+	"github.com/lgcorzo/operator/pkg/common"
 )
 
 func configureSidecarServer(c *Controller) *http.Server {

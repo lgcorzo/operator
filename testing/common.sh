@@ -320,7 +320,7 @@ function install_tenant_with_minio_version() {
     echo "NS:   ${NS}"
 
     echo "install_tenant_with_minio_version(): kustomize build github..."
-    kustomize build github.com/minio/operator/examples/kustomization/"${TENANT_TYPE}" >"${TENANT_YAML}"
+    kustomize build github.com/lgcorzo/operator/examples/kustomization/"${TENANT_TYPE}" >"${TENANT_YAML}"
     sed -i "s/tenant-lite/${NS}/g" "${TENANT_YAML}"
     sed -i "s/tenant-tiny/${NS}/g" "${TENANT_YAML}"
     sed -i "s/myminio/${TENANT_NAME}/g" "${TENANT_YAML}"
@@ -633,7 +633,7 @@ function install_operator_version() {
   echo "Target operator release: $version"
 
   # Initialize the MinIO Kubernetes Operator
-  kubectl apply -k github.com/minio/operator/resources/\?ref=v"$version"
+  kubectl apply -k github.com/lgcorzo/operator/resources/\?ref=v"$version"
 
 
   if [ "$1" = "helm" ]; then
@@ -778,7 +778,7 @@ function install_cert_manager_tenant() {
       sleep 1
     done
 
-    # https://github.com/minio/operator/blob/master/docs/cert-manager.md
+    # https://github.com/lgcorzo/operator/blob/master/docs/cert-manager.md
     echo "# Pass the CA cert to our Operator to trust the tenant:"
     echo "## First get the CA from cert-manager secret..."
     try kubectl get secrets -n tenant-certmanager tenant-certmanager-ca-tls -o=jsonpath='{.data.ca\.crt}' | base64 -d > public.crt
@@ -841,7 +841,7 @@ function install_tenant() {
     value=myminio
     echo "Installing lite tenant for version $1"
 
-    try kubectl apply -k "github.com/minio/operator/testing/tenant\?ref\=$1"
+    try kubectl apply -k "github.com/lgcorzo/operator/testing/tenant\?ref\=$1"
   fi
 
   echo "Waiting for the tenant statefulset, this indicates the tenant is being fulfilled"

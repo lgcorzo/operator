@@ -20,7 +20,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/minio/operator/pkg/resources/configmaps"
+	"github.com/lgcorzo/operator/pkg/resources/configmaps"
 	v1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
 	"github.com/prometheus-operator/prometheus-operator/pkg/client/versioned/fake"
 	"gopkg.in/yaml.v2"
@@ -28,7 +28,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	fake3 "k8s.io/client-go/kubernetes/fake"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 )
 
 func Test_checkAndCreatePrometheusAddlConfig(t *testing.T) {

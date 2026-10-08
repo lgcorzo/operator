@@ -25,7 +25,7 @@ into the `minio-tenant` namespace using the default Kubernetes storage class. Ch
 your requirements.
 
 ```sh
-kubectl apply -k github.com/minio/operator/examples/kustomization/base
+kubectl apply -k github.com/lgcorzo/operator/examples/kustomization/base
 ```
 
 ### TLS Certificate

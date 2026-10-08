@@ -31,7 +31,7 @@ import (
 	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/minio/minio-go/v7/pkg/set"
 
-	"github.com/minio/operator/pkg/auth/utils"
+	"github.com/lgcorzo/operator/pkg/auth/utils"
 	xoauth2 "golang.org/x/oauth2"
 )
 

@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"time"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 	"gopkg.in/yaml.v2"
 )
 

@@ -26,14 +26,14 @@ import (
 
 	kubeinformers "k8s.io/client-go/informers"
 
-	"github.com/minio/operator/pkg/utils"
+	"github.com/lgcorzo/operator/pkg/utils"
 
 	"github.com/minio/madmin-go/v3"
-	"github.com/minio/operator/pkg/common"
+	"github.com/lgcorzo/operator/pkg/common"
 	xcerts "github.com/minio/pkg/certs"
 
 	"github.com/minio/minio-go/v7/pkg/set"
-	"github.com/minio/operator/pkg/controller/certificates"
+	"github.com/lgcorzo/operator/pkg/controller/certificates"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/klog/v2"
@@ -41,11 +41,11 @@ import (
 	"k8s.io/client-go/tools/leaderelection"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
 
-	miniov1 "github.com/minio/operator/pkg/apis/minio.min.io/v1"
+	miniov1 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v1"
 
 	"golang.org/x/time/rate"
 
-	// Workaround for auth import issues refer https://github.com/minio/operator/issues/283
+	// Workaround for auth import issues refer https://github.com/lgcorzo/operator/issues/283
 	_ "k8s.io/client-go/plugin/pkg/client/auth"
 
 	appsv1 "k8s.io/api/apps/v1"
@@ -68,12 +68,12 @@ import (
 	"k8s.io/client-go/tools/record"
 	queue "k8s.io/client-go/util/workqueue"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	clientset "github.com/minio/operator/pkg/client/clientset/versioned"
-	minioscheme "github.com/minio/operator/pkg/client/clientset/versioned/scheme"
-	informers "github.com/minio/operator/pkg/client/informers/externalversions/minio.min.io/v2"
-	stsInformers "github.com/minio/operator/pkg/client/informers/externalversions/sts.min.io/v1beta1"
-	"github.com/minio/operator/pkg/resources/statefulsets"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	clientset "github.com/lgcorzo/operator/pkg/client/clientset/versioned"
+	minioscheme "github.com/lgcorzo/operator/pkg/client/clientset/versioned/scheme"
+	informers "github.com/lgcorzo/operator/pkg/client/informers/externalversions/minio.min.io/v2"
+	stsInformers "github.com/lgcorzo/operator/pkg/client/informers/externalversions/sts.min.io/v1beta1"
+	"github.com/lgcorzo/operator/pkg/resources/statefulsets"
 )
 
 const (

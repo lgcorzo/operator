@@ -169,7 +169,7 @@ existing volumes (this happens if you don't add the right `securityContext`) or 
 Once all your tenants are prepared for the upgrade it's time to upgrade Operator:
 
 ```bash
-kubectl apply -k github.com/minio/operator/\?ref\=v4.2.3
+kubectl apply -k github.com/lgcorzo/operator/\?ref\=v4.2.3
 ```
 
 The above command will update the MinIO `Tenant CRD`, update the MinIO Operator `image` and trigger the upgrade for each
@@ -240,7 +240,7 @@ existing volumes (this happens if you don't add the right `securityContext`) or 
 Once all your tenants are prepared for the upgrade it's time to upgrade Operator:
 
 ```bash
-kubectl apply -k github.com/minio/operator/\?ref\=v4.4.18
+kubectl apply -k github.com/lgcorzo/operator/\?ref\=v4.4.18
 ```
 
 The above command will update the MinIO `Tenant CRD`, update the MinIO Operator `image` and trigger the upgrade for each

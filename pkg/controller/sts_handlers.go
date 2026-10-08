@@ -28,14 +28,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/minio/operator/pkg/common"
+	"github.com/lgcorzo/operator/pkg/common"
 
-	"github.com/minio/operator/pkg/apis/sts.min.io/v1beta1"
+	"github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1beta1"
 	iampolicy "github.com/minio/pkg/iam/policy"
 
 	"github.com/gorilla/mux"
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	xhttp "github.com/minio/operator/pkg/internal"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	xhttp "github.com/lgcorzo/operator/pkg/internal"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 

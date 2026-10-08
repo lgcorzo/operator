@@ -25,10 +25,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/minio/operator/pkg/common"
+	"github.com/lgcorzo/operator/pkg/common"
 
 	"github.com/gorilla/mux"
-	"github.com/minio/operator/pkg/resources/services"
+	"github.com/lgcorzo/operator/pkg/resources/services"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 

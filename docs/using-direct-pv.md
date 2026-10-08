@@ -2,7 +2,7 @@
 
 ## Install Direct-PV Driver
 
-Follow the instructions to install DirectPV [here](https://github.com/minio/directpv)
+Follow the instructions to install DirectPV [here](https://github.com/lgcorzo/directpv)
 
 ### Utilize the CSI with MinIO operator
 

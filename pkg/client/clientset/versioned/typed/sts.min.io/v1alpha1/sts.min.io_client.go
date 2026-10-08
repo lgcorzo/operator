@@ -21,8 +21,8 @@ package v1alpha1
 import (
 	http "net/http"
 
-	stsminiov1alpha1 "github.com/minio/operator/pkg/apis/sts.min.io/v1alpha1"
-	scheme "github.com/minio/operator/pkg/client/clientset/versioned/scheme"
+	stsminiov1alpha1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1alpha1"
+	scheme "github.com/lgcorzo/operator/pkg/client/clientset/versioned/scheme"
 	rest "k8s.io/client-go/rest"
 )
 

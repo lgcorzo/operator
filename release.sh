@@ -28,8 +28,8 @@ get_latest_release() {
 		sed -E 's/.*"([^"]+)".*/\1/'                                     # Pluck JSON value
 }
 
-MINIO_RELEASE=$(get_latest_release minio/minio)
-KES_RELEASE=$(get_latest_release minio/kes)
+MINIO_RELEASE=$(get_latest_release lgcorzo/minio)
+KES_RELEASE=$(get_latest_release lgcorzo/kes)
 
 MINIO_CURRENT_RELEASE=$(sed -nr 's/.*(minio\/minio\:)([v]?.*)"/\2/p' pkg/apis/minio.min.io/v2/constants.go)
 KES_CURRENT_RELEASE=$(sed -nr 's/.*(minio\/kes\:)([v]?.*)"/\2/p' pkg/apis/minio.min.io/v2/constants.go)
@@ -52,7 +52,7 @@ files=(
 	"testing/console-tenant+kes.sh"
 )
 
-CURRENT_RELEASE=$(get_latest_release minio/operator)
+CURRENT_RELEASE=$(get_latest_release lgcorzo/operator)
 CURRENT_RELEASE="${CURRENT_RELEASE:1}"
 
 echo "Upgrade: $CURRENT_RELEASE => $RELEASE"
@@ -84,7 +84,7 @@ sed_inplace "s~operator.min.io/version: .*~operator.min.io/version: v${RELEASE}~
 
 if [ "${RELEASE_SIDECAR}" = "true" ]; then
 
-	sed_inplace 's~quay.io/minio/operator-sidecar:.*\"~quay.io/minio/operator-sidecar:v'$RELEASE'\"~g' "pkg/resources/statefulsets/minio-sidecar.go"
+	sed_inplace 's~quay.io/lgcorzo/operator-sidecar:.*\"~quay.io/lgcorzo/operator-sidecar:v'$RELEASE'\"~g' "pkg/resources/statefulsets/minio-sidecar.go"
 fi
 
 # Add all the generated files to git

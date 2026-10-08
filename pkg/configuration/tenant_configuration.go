@@ -21,9 +21,9 @@ import (
 	"sort"
 	"strings"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	"github.com/minio/operator/pkg/common"
-	"github.com/minio/operator/pkg/resources/statefulsets"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	"github.com/lgcorzo/operator/pkg/common"
+	"github.com/lgcorzo/operator/pkg/resources/statefulsets"
 	corev1 "k8s.io/api/core/v1"
 )
 

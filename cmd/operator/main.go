@@ -20,7 +20,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/minio/operator/pkg"
+	"github.com/lgcorzo/operator/pkg"
 
 	"github.com/minio/cli"
 	"github.com/minio/pkg/console"

@@ -21,9 +21,9 @@ package v2
 import (
 	context "context"
 
-	miniominiov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	applyconfigurationminiominiov2 "github.com/minio/operator/pkg/client/applyconfiguration/minio.min.io/v2"
-	scheme "github.com/minio/operator/pkg/client/clientset/versioned/scheme"
+	miniominiov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	applyconfigurationminiominiov2 "github.com/lgcorzo/operator/pkg/client/applyconfiguration/minio.min.io/v2"
+	scheme "github.com/lgcorzo/operator/pkg/client/clientset/versioned/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

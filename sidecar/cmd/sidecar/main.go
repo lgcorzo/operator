@@ -22,7 +22,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/minio/operator/sidecar/pkg"
+	"github.com/lgcorzo/operator/sidecar/pkg"
 
 	"github.com/minio/cli"
 	"github.com/minio/pkg/console"

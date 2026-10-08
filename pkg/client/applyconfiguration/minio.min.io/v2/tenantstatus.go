@@ -19,7 +19,7 @@
 package v2
 
 import (
-	miniominiov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	miniominiov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 

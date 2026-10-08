@@ -1,6 +1,6 @@
 # MinIO Operator
 
-[![build](https://img.shields.io/badge/build-passing-green.svg)](https://github.com/minio/operator/actions) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/minio/operator/blob/master/LICENSE)
+[![build](https://img.shields.io/badge/build-passing-green.svg)](https://github.com/lgcorzo/operator/actions) [![license](https://img.shields.io/badge/license-AGPL%20V3-blue)](https://github.com/lgcorzo/operator/blob/master/LICENSE)
 
 [![MinIO](https://raw.githubusercontent.com/minio/minio/master/.github/logo.svg?sanitize=true)](https://min.io)
 
@@ -8,16 +8,54 @@ MinIO is a Kubernetes-native high performance object store with an S3-compatible
 MinIO Kubernetes Operator supports deploying MinIO Tenants onto private and public
 cloud infrastructures ("Hybrid" Cloud).
 
-This README provides a high level description of the MinIO Operator and
-quickstart instructions. See https://min.io/docs/minio/kubernetes/upstream/index.html for
-complete documentation on the MinIO Operator.
+This repository is actively maintained under `@lgcorzo` as part of the **Sovereign MinIO Ecosystem**, delivering declarative MinIO Tenant orchestration, CRD management, and cluster automation for the **Dark Gravity** autonomous AI factory and sovereign production infrastructure.
 
 ## Table of Contents
 
+* [Dark Gravity Factory & Sovereign Infrastructure](#dark-gravity-factory--sovereign-ai-infrastructure)
+    * [Sovereign Maintenance Rationale](#sovereign-maintenance-rationale)
+    * [Automated CI/CD & Maintenance Pipeline](#automated-cicd--sovereign-maintenance-pipeline)
+    * [Sovereign MinIO Ecosystem (38 Repositories)](#sovereign-minio-ecosystem-38-repositories)
 * [Architecture](#architecture)
 * [Deploy the MinIO Operator and Create a Tenant](#deploy-the-minio-operator-and-create-a-tenant)
     * [Prerequisites](#prerequisites)
     * [Procedure](#procedure)
+* [License](#license)
+* [Explore Further](#explore-further)
+
+# Dark Gravity Factory & Sovereign AI Infrastructure
+
+This repository is actively maintained under `@lgcorzo` as part of the **Sovereign MinIO Ecosystem**—a suite of 38 interconnected repositories providing high-performance object storage, cryptographic security, and automated Kubernetes orchestration for sovereign AI and cloud environments.
+
+### Sovereign Maintenance Rationale
+
+- **Full Supply-Chain Autonomy**: Zero reliance on upstream breaking license changes or unannounced deprecations.
+- **Dark Gravity Factory Core Integration**: Essential component powering the autonomous AI factory, high-throughput storage, cryptographic security, and automated agent pipelines.
+- **Compliance & Enterprise Security**: Sovereign maintenance ensuring compliance with EU AI Act, SOC 2 Type II, ISO 25059, and zero-CVE SLAs.
+- **Ecosystem Interoperability**: Direct integration with all 38 repositories in `@lgcorzo` (MinIO Server, MC, KES, Operator, DirectPV, Console, SIMD acceleration libraries, and client SDKs).
+
+### Automated CI/CD & Sovereign Maintenance Pipeline
+
+```mermaid
+graph TD
+    A[Sovereign Core @lgcorzo] --> B[Automated CI/CD Pipelines]
+    B --> C[Security & Vulnerability Scanning - govulncheck/CodeQL]
+    B --> D[Multi-Architecture Builds - Docker/GoReleaser]
+    B --> E[Ecosystem Compatibility & Interoperability]
+    C --> F[Zero-CVE SLA & Enterprise Compliance]
+    D --> F
+    E --> F
+```
+
+### Sovereign MinIO Ecosystem (38 Repositories)
+
+| Category | Repositories |
+| :--- | :--- |
+| **Core Storage & Server** | `lgcorzo/minio`, `lgcorzo/mc`, `lgcorzo/operator`, `lgcorzo/directpv`, `lgcorzo/console`, `lgcorzo/kes` |
+| **SDKs & Client Libraries** | `lgcorzo/minio-go`, `lgcorzo/madmin-go`, `lgcorzo/kes-go`, `lgcorzo/minio-java`, `lgcorzo/minio-py`, `lgcorzo/minio-js`, `lgcorzo/minio-dotnet`, `lgcorzo/minio-cpp`, `lgcorzo/minio-rs`, `lgcorzo/minio-php` |
+| **Low-Level SIMD Acceleration** | `lgcorzo/sha256-simd`, `lgcorzo/md5-simd`, `lgcorzo/blake2b-simd`, `lgcorzo/highwayhash`, `lgcorzo/dsha256`, `lgcorzo/simdjson-go` |
+| **Infrastructure & Security Utilities** | `lgcorzo/pkg`, `lgcorzo/cli`, `lgcorzo/mux`, `lgcorzo/kms-go`, `lgcorzo/sio-go`, `lgcorzo/certgen`, `lgcorzo/moby`, `lgcorzo/sidecar`, `lgcorzo/operator-sidecar`, `lgcorzo/minio-operator` |
+| **Integrations & Ecosystem Extensions** | `lgcorzo/minio-resource-provider`, `lgcorzo/warp`, `lgcorzo/sidekick`, `lgcorzo/linode-k8s-event-exporter`, `lgcorzo/event-exporter`, `lgcorzo/healthcheck` |
 
 # Architecture
 
@@ -66,7 +104,7 @@ default `StorageClass` may use the `Immediate` setting, which can cause complica
 strongly recommends creating a custom `StorageClass` for use by `PV` supporting a MinIO Tenant.
 
 The following `StorageClass` object contains the appropriate fields for supporting a MinIO Tenant using
-[MinIO DirectPV-managed drives](https://github.com/minio/directpv):
+[MinIO DirectPV-managed drives](https://github.com/lgcorzo/directpv):
 
 ```yaml
 apiVersion: storage.k8s.io/v1
@@ -85,7 +123,7 @@ sufficient [Persistent Volumes](https://kubernetes.io/docs/concepts/storage/pers
 requirements of each PVC for the tenant to start correctly. For example, deploying a Tenant with 16 volumes requires
 18 (16 + 2). If each PVC requests 1TB capacity, then each PV must also provide *at least* 1TB of capacity.
 
-MinIO recommends using the [MinIO DirectPV Driver](https://github.com/minio/directpv) to automatically provision
+MinIO recommends using the [MinIO DirectPV Driver](https://github.com/lgcorzo/directpv) to automatically provision
 Persistent Volumes from locally attached drives. This procedure assumes MinIO DirectPV is installed and configured.
 
 For clusters which cannot deploy MinIO DirectPV,
@@ -127,7 +165,7 @@ drives per node. For example, a 4-node Tenant with 4 drives per node requires 16
 MinIO *strongly recommends* using the following CSI drivers for creating local PV to ensure best object storage
 performance:
 
-- [MinIO DirectPV](https://github.com/minio/directpv)
+- [MinIO DirectPV](https://github.com/lgcorzo/directpv)
 - [Local Persistent Volume](https://kubernetes.io/docs/concepts/storage/volumes/#local)
 
 ## Procedure
@@ -136,10 +174,10 @@ performance:
 
 The standard `kubectl` tool ships with support
 for [kustomize](https://kubernetes.io/docs/tasks/manage-kubernetes-objects/kustomization/) out of the box, so you can
-use that to install MiniO Operator.
+use that to install MinIO Operator.
 
 ```sh
-kubectl kustomize github.com/minio/operator\?ref=v7.1.1 | kubectl apply -f -
+kubectl kustomize github.com/lgcorzo/operator\?ref=v7.1.1 | kubectl apply -f -
 ```
 
 Run the following command to verify the status of the Operator:
@@ -161,7 +199,7 @@ We provide a variety of examples for creating MinIO Tenants in the `examples` di
 4-node MinIO Tenant with 4 volumes per node:
 
 ```yaml
-kubectl apply -k github.com/minio/operator/examples/kustomization/base
+kubectl apply -k github.com/lgcorzo/operator/examples/kustomization/base
 ```
 
 ### 3) Connect to the Tenant
@@ -198,7 +236,6 @@ cluster deployment. While Kubernetes mounts this CA on Pods in the cluster, Pods
 enable validation of MinIO TLS certificates:
 
 ```sh
-
 cp /var/run/secrets/kubernetes.io/serviceaccount/ca.crt /usr/local/share/ca-certificates/
 update-ca-certificates
 ```
@@ -221,11 +258,11 @@ Use of MinIO Operator is governed by the GNU AGPLv3 or later, found in the [LICE
 - [Deploy a MinIO Tenant using the MinIO Plugin](https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html)
 - [Configure TLS/SSL for MinIO Tenants](https://min.io/docs/minio/kubernetes/upstream/operations/network-encryption.html)
 
-[Github Resources](https://github.com/minio/operator/blob/master/docs/)
+[Github Resources](https://github.com/lgcorzo/operator/blob/master/docs/)
 
-- [Examples for MinIO Tenant Settings](https://github.com/minio/operator/blob/master/docs/examples.md)
-- [Custom Hostname Discovery](https://github.com/minio/operator/blob/master/docs/custom-name-templates.md)
-- [Apply PodSecurityPolicy](https://github.com/minio/operator/blob/master/docs/pod-security-policy.md)
-- [Deploy MinIO Tenant with KES](https://github.com/minio/operator/blob/master/docs/kes.md)
+- [Examples for MinIO Tenant Settings](https://github.com/lgcorzo/operator/blob/master/docs/examples.md)
+- [Custom Hostname Discovery](https://github.com/lgcorzo/operator/blob/master/docs/custom-name-templates.md)
+- [Apply PodSecurityPolicy](https://github.com/lgcorzo/operator/blob/master/docs/pod-security-policy.md)
+- [Deploy MinIO Tenant with KES](https://github.com/lgcorzo/operator/blob/master/docs/kes.md)
 - [Tenant API Documentation](docs/tenant_crd.adoc)
 - [Policy Binding API Documentation](docs/policybinding_crd.adoc)

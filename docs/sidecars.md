@@ -8,7 +8,7 @@ Sidecars are containers that run in the same pod as the MinIO container, this ma
 
 ### Prerequisites
 
-- MinIO Operator up and running as explained in the [document here](https://github.com/minio/operator#operator-setup).
+- MinIO Operator up and running as explained in the [document here](https://github.com/lgcorzo/operator#operator-setup).
 
 ## Sidecars Configuration
 

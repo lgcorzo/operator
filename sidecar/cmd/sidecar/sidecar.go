@@ -21,7 +21,7 @@ import (
 	"os"
 
 	"github.com/minio/cli"
-	"github.com/minio/operator/sidecar/pkg/sidecar"
+	"github.com/lgcorzo/operator/sidecar/pkg/sidecar"
 )
 
 // starts the controller

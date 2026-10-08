@@ -67,8 +67,8 @@ set count is 4, new pools should have at least 4 or multiple of 4 drives.
 
 ### Effects on KES/TLS Enabled Instance
 
-If your MinIO Operator configuration has [KES](https://github.com/minio/operator/blob/master/docs/kes.md)
-or [Automatic TLS](https://github.com/minio/operator/blob/master/docs/tls.md#automatic-csr-generation) enabled, there
+If your MinIO Operator configuration has [KES](https://github.com/lgcorzo/operator/blob/master/docs/kes.md)
+or [Automatic TLS](https://github.com/lgcorzo/operator/blob/master/docs/tls.md#automatic-csr-generation) enabled, there
 are additional considerations:
 
 - When new pools are added, Operator invalidates older self-signed TLS certificates and the related secrets. Operator
@@ -77,7 +77,7 @@ are additional considerations:
   are approved, Operator will not create MinIO StatefulSet pods.
 
 - If you're using your own certificates, as
-  explained [here](https://github.com/minio/operator/blob/master/docs/tls.md#pass-certificate-secret-to-tenant), please
+  explained [here](https://github.com/lgcorzo/operator/blob/master/docs/tls.md#pass-certificate-secret-to-tenant), please
   ensure to use/update proper certificates that allow older and new MinIO nodes.
 
 ## Downtime

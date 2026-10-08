@@ -22,9 +22,9 @@ import (
 	fmt "fmt"
 	http "net/http"
 
-	miniov2 "github.com/minio/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
-	stsv1alpha1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1alpha1"
-	stsv1beta1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
+	miniov2 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
+	stsv1alpha1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1alpha1"
+	stsv1beta1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"

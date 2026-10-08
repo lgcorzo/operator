@@ -24,14 +24,14 @@ import (
 	"os"
 	"time"
 
-	"github.com/minio/operator/pkg/configuration"
+	"github.com/lgcorzo/operator/pkg/configuration"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	v2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	clientset "github.com/minio/operator/pkg/client/clientset/versioned"
-	minioInformers "github.com/minio/operator/pkg/client/informers/externalversions"
-	v22 "github.com/minio/operator/pkg/client/informers/externalversions/minio.min.io/v2"
+	v2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	clientset "github.com/lgcorzo/operator/pkg/client/clientset/versioned"
+	minioInformers "github.com/lgcorzo/operator/pkg/client/informers/externalversions"
+	v22 "github.com/lgcorzo/operator/pkg/client/informers/externalversions/minio.min.io/v2"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/client-go/informers"
 	coreinformers "k8s.io/client-go/informers/core/v1"

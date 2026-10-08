@@ -89,8 +89,8 @@ Be sure to follow step [Create Cluster Self-signed root Issuer](#create-cluster-
 MinIO STS is a service included with MinIO Operator that provides Native IAM Authentication for Kubernetes. In essence
 this service allows you to control access to your MinIO tenant from your kubernetes applications without having to explicitly create credentials
 for each application. For more information on the Service see the MinIO docs at https://min.io/docs/minio/kubernetes/upstream/developers/sts-for-operator.html.
-There is also an [STS](https://github.com/minio/operator/blob/master/docs/STS.md) guide in the docs and example client code in
-https://github.com/minio/operator/tree/master/examples/kustomization/sts-example.
+There is also an [STS](https://github.com/lgcorzo/operator/blob/master/docs/STS.md) guide in the docs and example client code in
+https://github.com/lgcorzo/operator/tree/master/examples/kustomization/sts-example.
 
 For the purpose of this guide, STS Service can be considered a webserver presented with a TLS certificate for https traffic.
 This guide covers how to **disable** the automatic generation of the certificate in MinIO Operator and issue the certificate using
@@ -215,7 +215,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- github.com/minio/operator/resources
+- github.com/lgcorzo/operator/resources
 
 patches:
 - patch: |-
