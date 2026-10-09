@@ -42,6 +42,12 @@ yell() { echo "$0: $*" >&2; }
 
 die() {
   yell "$*"
+  echo "=== DEBUG: Pods across all namespaces ==="
+  kubectl get pods -A -o wide || true
+  echo "=== DEBUG: Operator logs ==="
+  kubectl logs -n minio-operator -l name=minio-operator --tail=100 || true
+  echo "=== DEBUG: Describe pods ==="
+  kubectl describe pods -A || true
   (kind delete cluster || true) && exit 111
 }
 
@@ -56,6 +62,9 @@ function setup_kind() {
   fi
   echo "Kind is ready"
   try kubectl get nodes
+  echo "Preloading MinIO image into Kind cluster..."
+  docker pull quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || docker pull minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  kind load docker-image quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || kind load docker-image minio/minio:RELEASE.2025-04-08T15-41-24Z || true
 }
 
 # Function Intended to Test cert-manager for Tenant's certificate.
@@ -290,7 +299,10 @@ function setup_testbed() {
 
 # usage: get_latest_minio_version
 function get_latest_minio_version() {
-    version=$(curl -sL https://api.github.com/repos/lgcorzo/minio/tags | jq -r '.[1].name')
+    version=$(curl -sL https://api.github.com/repos/minio/minio/tags | jq -r '.[1].name')
+    if [ -z "$version" ] || [ "$version" = "null" ]; then
+        version="RELEASE.2025-04-08T15-41-24Z"
+    fi
     echo "$version"
 }
 
@@ -496,7 +508,10 @@ function deploy_debug_pod() {
 # usage: get_latest_operator_version
 function get_latest_operator_version() {
   ### NOTE: DON'T PUT ECHO IN BETWEEN BECAUSE THAT IS WHAT WE RETURN AT THE END OF THE FUNCTION
-  version=$(curl -sL https://api.github.com/repos/lgcorzo/operator/tags | jq -r '.[0].name')
+  version=$(curl -sL https://api.github.com/repos/minio/operator/tags | jq -r '.[0].name')
+  if [ -z "$version" ] || [ "$version" = "null" ]; then
+      version="v5.0.15"
+  fi
   echo "$version"
 }
 
@@ -628,12 +643,15 @@ function install_operator_version() {
   # Obtain release
   version="$1"
   if [ -z "$version" ]; then
-    version=$(curl https://api.github.com/repos/lgcorzo/operator/releases/latest | jq --raw-output '.tag_name | "\(.[1:])"')
+    version=$(curl -sL https://api.github.com/repos/minio/operator/releases/latest | jq --raw-output '.tag_name | "\(.[1:])"')
+  fi
+  if [ -z "$version" ] || [ "$version" = "null" ] || [ "$version" = "ull" ]; then
+    version="5.0.15"
   fi
   echo "Target operator release: $version"
 
   # Initialize the MinIO Kubernetes Operator
-  kubectl apply -k github.com/lgcorzo/operator/resources/\?ref=v"$version"
+  kubectl apply -k github.com/minio/operator/resources/\?ref=v"$version"
 
 
   if [ "$1" = "helm" ]; then
@@ -828,7 +846,7 @@ function install_tenant() {
     echo "Installing policyBinding tenant from current branch"
 
     try kubectl apply -k "${SCRIPT_DIR}/../examples/kustomization/sts-example/tenant"
-  elif [ -e $1 ]; then
+  elif [ -z "$1" ] || [ -e "$1" ]; then
     namespace="tenant-lite"
     key=v1.min.io/tenant
     value=myminio
@@ -841,7 +859,7 @@ function install_tenant() {
     value=myminio
     echo "Installing lite tenant for version $1"
 
-    try kubectl apply -k "github.com/lgcorzo/operator/testing/tenant\?ref\=$1"
+    try kubectl apply -k "github.com/minio/operator/testing/tenant\?ref\=$1"
   fi
 
   echo "Waiting for the tenant statefulset, this indicates the tenant is being fulfilled"
