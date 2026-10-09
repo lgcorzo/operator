@@ -52,7 +52,7 @@ files=(
 	"testing/console-tenant+kes.sh"
 )
 
-CURRENT_RELEASE=$(get_latest_release minio/operator)
+CURRENT_RELEASE=$(get_latest_release lgcorzo/operator)
 CURRENT_RELEASE="${CURRENT_RELEASE:1}"
 
 echo "Upgrade: $CURRENT_RELEASE => $RELEASE"
