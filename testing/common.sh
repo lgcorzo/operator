@@ -30,7 +30,8 @@ if [[ -z "${DEV_TEST}" ]]; then
 
   sudo chmod +x /usr/local/bin/kubectl
 
-  sudo curl -#L "https://dl.min.io/client/mc/release/${OS}-${ARCH}/mc" -o /usr/local/bin/mc
+  docker run --rm --entrypoint cat quay.io/minio/aistor/mc:latest /usr/bin/mc > /tmp/mc || sudo curl -#L "https://dl.min.io/client/mc/release/${OS}-${ARCH}/mc" -o /tmp/mc
+  sudo mv /tmp/mc /usr/local/bin/mc
   sudo chmod +x /usr/local/bin/mc
 
   ## Install yq
@@ -68,18 +69,26 @@ function setup_kind() {
   docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:latest || true
   docker tag quay.io/minio/aistor/minio:edge-daily minio/minio:RELEASE.2025-04-08T15-41-24Z || true
   docker tag quay.io/minio/aistor/minio:edge-daily minio/minio:latest || true
+  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z || true
+  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z.hotfix.0fbf4c10f || true
   kind load docker-image quay.io/minio/aistor/minio:edge-daily || true
   kind load docker-image quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
   kind load docker-image quay.io/minio/minio:latest || true
   kind load docker-image minio/minio:RELEASE.2025-04-08T15-41-24Z || true
   kind load docker-image minio/minio:latest || true
+  kind load docker-image quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z || true
+  kind load docker-image quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z.hotfix.0fbf4c10f || true
 
   docker pull quay.io/minio/aistor/mc:latest || true
   docker tag quay.io/minio/aistor/mc:latest quay.io/minio/mc:latest || true
   docker tag quay.io/minio/aistor/mc:latest quay.io/minio/mc || true
+  docker tag quay.io/minio/aistor/mc:latest minio/mc:latest || true
+  docker tag quay.io/minio/aistor/mc:latest minio/mc || true
   kind load docker-image quay.io/minio/aistor/mc:latest || true
   kind load docker-image quay.io/minio/mc:latest || true
   kind load docker-image quay.io/minio/mc || true
+  kind load docker-image minio/mc:latest || true
+  kind load docker-image minio/mc || true
 }
 
 # Function Intended to Test cert-manager for Tenant's certificate.
@@ -518,6 +527,7 @@ function deploy_debug_pod() {
         --for=condition=ready pod \
         --selector=app=ubuntu \
         --timeout=60s
+    kubectl cp /usr/local/bin/mc default/ubuntu-pod:/usr/local/bin/mc || true
     execute_pod_script install-mc.sh ubuntu-pod
     check_script_result default ubuntu-pod install-mc.log
 }

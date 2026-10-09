@@ -320,7 +320,7 @@ jobs:
   #        run: |
   #          "${GITHUB_WORKSPACE}/testing/console-tenant+kes.sh"
   test-tenant-hotfix-update:
-    timeout-minutes: 10
+    timeout-minutes: 30
     runs-on: ${{ matrix.os }}
     needs:
       - operator

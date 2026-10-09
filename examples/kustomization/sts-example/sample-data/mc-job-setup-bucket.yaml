@@ -58,7 +58,8 @@ spec:
             defaultMode: 0644
       containers:
         - name: mc
-          image: minio/mc
+          image: quay.io/minio/aistor/mc:latest
+          imagePullPolicy: IfNotPresent
           command: [ "/start-config/setup.sh" ]
           volumeMounts:
             - name: start-config
