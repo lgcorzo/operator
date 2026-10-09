@@ -653,10 +653,7 @@ function install_operator() {
   kubectl -n minio-operator get pods
 
   echo "Waiting for Operator Pods to come online (2m timeout)"
-  try kubectl wait --namespace minio-operator \
-    --for=condition=ready pod \
-    --selector $key=$value \
-    --timeout=120s
+  try kubectl -n minio-operator rollout status deployment/minio-operator --timeout=120s
 
   echo "start - get data to verify proper image is being used"
   kubectl get pods --namespace minio-operator
