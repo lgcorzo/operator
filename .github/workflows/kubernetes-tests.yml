@@ -244,13 +244,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
@@ -274,13 +274,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
@@ -304,13 +304,13 @@ jobs:
   #      - uses: actions/setup-go@v5
   #        with:
   #          go-version: ${{ matrix.go-version }}
-  #      - uses: actions/cache@v3
+  #      - uses: actions/cache@v4
   #        name: Operator Binary Cache
   #        with:
   #          path: |
   #            ./minio-operator
   #          key: ${{ runner.os }}-binary-${{ github.run_id }}
-  #      - uses: actions/cache@v3
+  #      - uses: actions/cache@v4
   #        name: Operator Sidecar Binary Cache
   #        with:
   #          path: |
@@ -334,13 +334,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
@@ -364,13 +364,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
@@ -393,13 +393,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
@@ -432,13 +432,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
@@ -465,13 +465,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
@@ -502,13 +502,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go-version }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Binary Cache
         with:
           path: |
             ./minio-operator
           key: ${{ runner.os }}-binary-${{ github.run_id }}
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         name: Operator Sidecar Binary Cache
         with:
           path: |
