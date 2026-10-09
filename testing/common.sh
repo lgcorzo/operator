@@ -62,9 +62,24 @@ function setup_kind() {
   fi
   echo "Kind is ready"
   try kubectl get nodes
-  echo "Preloading MinIO image into Kind cluster..."
-  docker pull quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || docker pull minio/minio:RELEASE.2025-04-08T15-41-24Z || true
-  kind load docker-image quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || kind load docker-image minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  echo "Preloading MinIO and mc images into Kind cluster..."
+  docker pull quay.io/minio/aistor/minio:edge-daily || true
+  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:latest || true
+  docker tag quay.io/minio/aistor/minio:edge-daily minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  docker tag quay.io/minio/aistor/minio:edge-daily minio/minio:latest || true
+  kind load docker-image quay.io/minio/aistor/minio:edge-daily || true
+  kind load docker-image quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  kind load docker-image quay.io/minio/minio:latest || true
+  kind load docker-image minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  kind load docker-image minio/minio:latest || true
+
+  docker pull quay.io/minio/aistor/mc:latest || true
+  docker tag quay.io/minio/aistor/mc:latest quay.io/minio/mc:latest || true
+  docker tag quay.io/minio/aistor/mc:latest quay.io/minio/mc || true
+  kind load docker-image quay.io/minio/aistor/mc:latest || true
+  kind load docker-image quay.io/minio/mc:latest || true
+  kind load docker-image quay.io/minio/mc || true
 }
 
 # Function Intended to Test cert-manager for Tenant's certificate.
@@ -268,9 +283,11 @@ function install_mc() {
 function get_minio_image_name() {
   ### NOTE: DON'T PUT ECHO IN BETWEEN BECAUSE THAT IS WHAT WE RETURN AT THE END OF THE FUNCTION
   VERSION=$1
-  IMG="quay.io/minio/minio:${VERSION}"
+  IMG="quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z"
   if [[ "${VERSION}" == *"hotfix"* ]]; then
     IMG="docker.io/minio/minio:${VERSION}"
+  elif [ -n "${VERSION}" ] && [ "${VERSION}" != "latest" ]; then
+    IMG="quay.io/minio/minio:${VERSION}"
   fi
   echo "${IMG}"
 }
@@ -520,7 +537,7 @@ function get_latest_operator_version() {
 function load_kind_image() {
   echo "load_kind_image():"
   echo "* Loading image ${1}"
-  try docker pull "$1"
+  docker pull "$1" || true
   try kind load docker-image "$1"
 }
 
