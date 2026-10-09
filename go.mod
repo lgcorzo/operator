@@ -1,4 +1,4 @@
-module github.com/minio/operator
+module github.com/lgcorzo/operator
 
 go 1.23.0
 
@@ -45,6 +45,13 @@ require (
 )
 
 replace golang.org/x/crypto => golang.org/x/crypto v0.36.0
+
+replace (
+	github.com/minio/cli => github.com/lgcorzo/cli v1.24.2
+	github.com/minio/madmin-go/v3 => github.com/lgcorzo/madmin-go/v3 v3.0.100
+	github.com/minio/minio-go/v7 => github.com/lgcorzo/minio-go/v7 v7.0.89
+	github.com/minio/pkg => github.com/lgcorzo/pkg v1.7.5
+)
 
 require (
 	github.com/go-test/deep v1.1.1

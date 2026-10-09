@@ -5,7 +5,7 @@ project_name: operator-sidecar
 release:
   name_template: "Version {{.Version}}"
   github:
-    owner: minio
+    owner: lgcorzo
     name: operator
   extra_files:
     - glob: "*.minisig"
@@ -29,7 +29,7 @@ builds:
     binary: minio-operator-sidecar
     main: ./cmd/sidecar/
     ldflags:
-      - -s -w -X github.com/minio/operator/sidecar/pkg.ReleaseTag={{.Tag}} -X github.com/minio/operator/sidecar/pkg.CommitID={{.FullCommit}} -X github.com/minio/operator/sidecar/pkg.Version={{.Version}} -X github.com/minio/operator/sidecar/pkg.ShortCommitID={{.ShortCommit}} -X github.com/minio/operator/sidecar/pkg.ReleaseTime={{.Date}}
+      - -s -w -X github.com/lgcorzo/operator/sidecar/pkg.ReleaseTag={{.Tag}} -X github.com/lgcorzo/operator/sidecar/pkg.CommitID={{.FullCommit}} -X github.com/lgcorzo/operator/sidecar/pkg.Version={{.Version}} -X github.com/lgcorzo/operator/sidecar/pkg.ShortCommitID={{.ShortCommit}} -X github.com/lgcorzo/operator/sidecar/pkg.ReleaseTime={{.Date}}
     flags:
       - -trimpath
 

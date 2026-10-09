@@ -19,9 +19,9 @@
 package fake
 
 import (
-	v1beta1 "github.com/minio/operator/pkg/apis/sts.min.io/v1beta1"
-	stsminiov1beta1 "github.com/minio/operator/pkg/client/applyconfiguration/sts.min.io/v1beta1"
-	typedstsminiov1beta1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
+	v1beta1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1beta1"
+	stsminiov1beta1 "github.com/lgcorzo/operator/pkg/client/applyconfiguration/sts.min.io/v1beta1"
+	typedstsminiov1beta1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
 	gentype "k8s.io/client-go/gentype"
 )
 

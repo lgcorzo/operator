@@ -29,9 +29,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/minio/operator/pkg/certs"
+	"github.com/lgcorzo/operator/pkg/certs"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 	xcerts "github.com/minio/pkg/certs"
 	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/api/core/v1"

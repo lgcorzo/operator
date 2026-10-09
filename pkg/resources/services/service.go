@@ -19,7 +19,7 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/intstr"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 )
 
 // NewClusterIPForMinIO will return a new ClusterIP Kubernetes service for a Tenant

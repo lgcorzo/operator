@@ -21,9 +21,9 @@ package v1beta1
 import (
 	context "context"
 
-	stsminiov1beta1 "github.com/minio/operator/pkg/apis/sts.min.io/v1beta1"
-	applyconfigurationstsminiov1beta1 "github.com/minio/operator/pkg/client/applyconfiguration/sts.min.io/v1beta1"
-	scheme "github.com/minio/operator/pkg/client/clientset/versioned/scheme"
+	stsminiov1beta1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1beta1"
+	applyconfigurationstsminiov1beta1 "github.com/lgcorzo/operator/pkg/client/applyconfiguration/sts.min.io/v1beta1"
+	scheme "github.com/lgcorzo/operator/pkg/client/clientset/versioned/scheme"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

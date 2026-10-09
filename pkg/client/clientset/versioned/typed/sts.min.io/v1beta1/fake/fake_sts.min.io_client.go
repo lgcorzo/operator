@@ -19,7 +19,7 @@
 package fake
 
 import (
-	v1beta1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
+	v1beta1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )

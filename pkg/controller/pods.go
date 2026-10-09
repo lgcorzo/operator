@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"time"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	"github.com/minio/operator/pkg/utils"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	"github.com/lgcorzo/operator/pkg/utils"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	utilruntime "k8s.io/apimachinery/pkg/util/runtime"

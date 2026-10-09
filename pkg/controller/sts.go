@@ -11,10 +11,10 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	xhttp "github.com/lgcorzo/operator/pkg/internal"
 	"github.com/minio/madmin-go/v3"
 	"github.com/minio/minio-go/v7/pkg/credentials"
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	xhttp "github.com/minio/operator/pkg/internal"
 	authv1 "k8s.io/api/authentication/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/klog/v2"

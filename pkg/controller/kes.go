@@ -26,24 +26,24 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/minio/operator/pkg/certs"
+	"github.com/lgcorzo/operator/pkg/certs"
 
-	"github.com/minio/operator/pkg/controller/certificates"
+	"github.com/lgcorzo/operator/pkg/controller/certificates"
 
 	corev1 "k8s.io/api/core/v1"
 
-	"github.com/minio/operator/pkg/resources/services"
+	"github.com/lgcorzo/operator/pkg/resources/services"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
 
-	"github.com/minio/operator/pkg/resources/statefulsets"
+	"github.com/lgcorzo/operator/pkg/resources/statefulsets"
 	appsv1 "k8s.io/api/apps/v1"
 	"k8s.io/apimachinery/pkg/api/equality"
 
 	"k8s.io/klog/v2"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 )
 
 func generateKESCryptoData(tenant *miniov2.Tenant) ([]byte, []byte, error) {

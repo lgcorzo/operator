@@ -37,7 +37,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/minio/operator/pkg/certs"
+	"github.com/lgcorzo/operator/pkg/certs"
 
 	"github.com/miekg/dns"
 

@@ -19,9 +19,9 @@
 package sts
 
 import (
-	internalinterfaces "github.com/minio/operator/pkg/client/informers/externalversions/internalinterfaces"
-	v1alpha1 "github.com/minio/operator/pkg/client/informers/externalversions/sts.min.io/v1alpha1"
-	v1beta1 "github.com/minio/operator/pkg/client/informers/externalversions/sts.min.io/v1beta1"
+	internalinterfaces "github.com/lgcorzo/operator/pkg/client/informers/externalversions/internalinterfaces"
+	v1alpha1 "github.com/lgcorzo/operator/pkg/client/informers/externalversions/sts.min.io/v1alpha1"
+	v1beta1 "github.com/lgcorzo/operator/pkg/client/informers/externalversions/sts.min.io/v1beta1"
 )
 
 // Interface provides access to each of this group's versions.

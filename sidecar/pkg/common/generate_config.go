@@ -22,8 +22,8 @@ import (
 	"os"
 	"strings"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	"github.com/minio/operator/pkg/resources/statefulsets"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	"github.com/lgcorzo/operator/pkg/resources/statefulsets"
 )
 
 // AttachGeneratedConfig attaches the generated config to the file contents which will be stored in /tmp/minio/config.env

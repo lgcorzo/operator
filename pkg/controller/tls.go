@@ -28,10 +28,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/minio/operator/pkg/certs"
+	"github.com/lgcorzo/operator/pkg/certs"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	"github.com/minio/operator/pkg/controller/certificates"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	"github.com/lgcorzo/operator/pkg/controller/certificates"
 	xcerts "github.com/minio/pkg/certs"
 	"github.com/minio/pkg/env"
 	corev1 "k8s.io/api/core/v1"
@@ -342,7 +342,7 @@ func generateServiceCSRCryptoData(serviceName string) ([]byte, []byte, error) {
 		DNSNames:           []string{serviceName, opCommonNoDomain, opCommon},
 	}
 
-	// This sections addresses the edge case "remote error: tls: bad certificate" error in  https://github.com/minio/operator/issues/1234
+	// This sections addresses the edge case "remote error: tls: bad certificate" error in  https://github.com/lgcorzo/operator/issues/1234
 	// Openshift OLM creates an additional service `minio-operator-service`, there is no option to choose the name of the service
 	// This additional DNSName is to handle the calls from kube-apiserver through that service, which is the easiest way to have a clean operator fresh install.
 	if serviceName == "operator" {

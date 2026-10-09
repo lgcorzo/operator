@@ -24,7 +24,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	v2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	v2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 )
 
 func configureProbesServer(tenant *v2.Tenant) *http.Server {

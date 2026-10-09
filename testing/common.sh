@@ -30,7 +30,8 @@ if [[ -z "${DEV_TEST}" ]]; then
 
   sudo chmod +x /usr/local/bin/kubectl
 
-  sudo curl -#L "https://dl.min.io/client/mc/release/${OS}-${ARCH}/mc" -o /usr/local/bin/mc
+  docker run --rm --entrypoint cat quay.io/minio/aistor/mc:latest /usr/bin/mc > /tmp/mc || sudo curl -#L "https://dl.min.io/client/mc/release/${OS}-${ARCH}/mc" -o /tmp/mc
+  sudo mv /tmp/mc /usr/local/bin/mc
   sudo chmod +x /usr/local/bin/mc
 
   ## Install yq
@@ -42,6 +43,12 @@ yell() { echo "$0: $*" >&2; }
 
 die() {
   yell "$*"
+  echo "=== DEBUG: Pods across all namespaces ==="
+  kubectl get pods -A -o wide || true
+  echo "=== DEBUG: Operator logs ==="
+  kubectl logs -n minio-operator -l name=minio-operator --tail=100 || true
+  echo "=== DEBUG: Describe pods ==="
+  kubectl describe pods -A || true
   (kind delete cluster || true) && exit 111
 }
 
@@ -56,6 +63,43 @@ function setup_kind() {
   fi
   echo "Kind is ready"
   try kubectl get nodes
+  echo "Preloading MinIO, KES and mc images into Kind cluster..."
+  docker pull ghcr.io/lgcorzo/minio:latest || docker pull quay.io/minio/aistor/minio:edge-daily || true
+  IMAGE_SRC="ghcr.io/lgcorzo/minio:latest"
+  if ! docker inspect "$IMAGE_SRC" >/dev/null 2>&1; then
+    IMAGE_SRC="quay.io/minio/aistor/minio:edge-daily"
+  fi
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:latest || true
+  docker tag "$IMAGE_SRC" minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  docker tag "$IMAGE_SRC" minio/minio:latest || true
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z || true
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z.hotfix.0fbf4c10f || true
+  docker tag "$IMAGE_SRC" quay.io/minio/aistor/minio:edge-daily || true
+  kind load docker-image "$IMAGE_SRC" || true
+  kind load docker-image quay.io/minio/aistor/minio:edge-daily || true
+  kind load docker-image quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  kind load docker-image quay.io/minio/minio:latest || true
+  kind load docker-image minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  kind load docker-image minio/minio:latest || true
+  kind load docker-image quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z || true
+  kind load docker-image quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z.hotfix.0fbf4c10f || true
+
+  docker pull quay.io/minio/kes:2025-03-12T09-35-18Z || true
+  docker tag quay.io/minio/kes:2025-03-12T09-35-18Z minio/kes:2025-03-12T09-35-18Z || true
+  kind load docker-image quay.io/minio/kes:2025-03-12T09-35-18Z || true
+  kind load docker-image minio/kes:2025-03-12T09-35-18Z || true
+
+  docker pull quay.io/minio/aistor/mc:latest || true
+  docker tag quay.io/minio/aistor/mc:latest quay.io/minio/mc:latest || true
+  docker tag quay.io/minio/aistor/mc:latest quay.io/minio/mc || true
+  docker tag quay.io/minio/aistor/mc:latest minio/mc:latest || true
+  docker tag quay.io/minio/aistor/mc:latest minio/mc || true
+  kind load docker-image quay.io/minio/aistor/mc:latest || true
+  kind load docker-image quay.io/minio/mc:latest || true
+  kind load docker-image quay.io/minio/mc || true
+  kind load docker-image minio/mc:latest || true
+  kind load docker-image minio/mc || true
 }
 
 # Function Intended to Test cert-manager for Tenant's certificate.
@@ -259,9 +303,11 @@ function install_mc() {
 function get_minio_image_name() {
   ### NOTE: DON'T PUT ECHO IN BETWEEN BECAUSE THAT IS WHAT WE RETURN AT THE END OF THE FUNCTION
   VERSION=$1
-  IMG="quay.io/minio/minio:${VERSION}"
+  IMG="quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z"
   if [[ "${VERSION}" == *"hotfix"* ]]; then
     IMG="docker.io/minio/minio:${VERSION}"
+  elif [ -n "${VERSION}" ] && [ "${VERSION}" != "latest" ]; then
+    IMG="quay.io/minio/minio:${VERSION}"
   fi
   echo "${IMG}"
 }
@@ -291,6 +337,9 @@ function setup_testbed() {
 # usage: get_latest_minio_version
 function get_latest_minio_version() {
     version=$(curl -sL https://api.github.com/repos/minio/minio/tags | jq -r '.[1].name')
+    if [ -z "$version" ] || [ "$version" = "null" ]; then
+        version="RELEASE.2025-04-08T15-41-24Z"
+    fi
     echo "$version"
 }
 
@@ -320,7 +369,7 @@ function install_tenant_with_minio_version() {
     echo "NS:   ${NS}"
 
     echo "install_tenant_with_minio_version(): kustomize build github..."
-    kustomize build github.com/minio/operator/examples/kustomization/"${TENANT_TYPE}" >"${TENANT_YAML}"
+    kustomize build github.com/lgcorzo/operator/examples/kustomization/"${TENANT_TYPE}" >"${TENANT_YAML}"
     sed -i "s/tenant-lite/${NS}/g" "${TENANT_YAML}"
     sed -i "s/tenant-tiny/${NS}/g" "${TENANT_YAML}"
     sed -i "s/myminio/${TENANT_NAME}/g" "${TENANT_YAML}"
@@ -489,6 +538,7 @@ function deploy_debug_pod() {
         --for=condition=ready pod \
         --selector=app=ubuntu \
         --timeout=60s
+    kubectl cp /usr/local/bin/mc default/ubuntu-pod:/usr/local/bin/mc || true
     execute_pod_script install-mc.sh ubuntu-pod
     check_script_result default ubuntu-pod install-mc.log
 }
@@ -497,6 +547,9 @@ function deploy_debug_pod() {
 function get_latest_operator_version() {
   ### NOTE: DON'T PUT ECHO IN BETWEEN BECAUSE THAT IS WHAT WE RETURN AT THE END OF THE FUNCTION
   version=$(curl -sL https://api.github.com/repos/minio/operator/tags | jq -r '.[0].name')
+  if [ -z "$version" ] || [ "$version" = "null" ]; then
+      version="v5.0.15"
+  fi
   echo "$version"
 }
 
@@ -505,8 +558,8 @@ function get_latest_operator_version() {
 function load_kind_image() {
   echo "load_kind_image():"
   echo "* Loading image ${1}"
-  try docker pull "$1"
-  try kind load docker-image "$1"
+  docker pull "$1" || true
+  kind load docker-image "$1" || true
 }
 
 # usage: load_kind_images
@@ -628,7 +681,10 @@ function install_operator_version() {
   # Obtain release
   version="$1"
   if [ -z "$version" ]; then
-    version=$(curl https://api.github.com/repos/minio/operator/releases/latest | jq --raw-output '.tag_name | "\(.[1:])"')
+    version=$(curl -sL https://api.github.com/repos/minio/operator/releases/latest | jq --raw-output '.tag_name | "\(.[1:])"')
+  fi
+  if [ -z "$version" ] || [ "$version" = "null" ] || [ "$version" = "ull" ]; then
+    version="5.0.15"
   fi
   echo "Target operator release: $version"
 
@@ -746,7 +802,7 @@ function check_tenant_status() {
 	  try kubectl delete pod admin-mc -n tenant-certmanager
 
   else
-    try kubectl run --restart=Never admin-mc --image quay.io/minio/mc \
+    try kubectl run --restart=Never admin-mc --image quay.io/minio/aistor/mc:latest --image-pull-policy=IfNotPresent \
       --env="MC_HOST_minio=https://${USER}:${PASSWORD}@minio.${1}.svc.cluster.local" \
       --command -- bash -c "until (mc admin info minio/ ); do echo 'waiting... for 5secs' && sleep 5; done"
     sleep 10
@@ -778,7 +834,7 @@ function install_cert_manager_tenant() {
       sleep 1
     done
 
-    # https://github.com/minio/operator/blob/master/docs/cert-manager.md
+    # https://github.com/lgcorzo/operator/blob/master/docs/cert-manager.md
     echo "# Pass the CA cert to our Operator to trust the tenant:"
     echo "## First get the CA from cert-manager secret..."
     try kubectl get secrets -n tenant-certmanager tenant-certmanager-ca-tls -o=jsonpath='{.data.ca\.crt}' | base64 -d > public.crt
@@ -828,7 +884,7 @@ function install_tenant() {
     echo "Installing policyBinding tenant from current branch"
 
     try kubectl apply -k "${SCRIPT_DIR}/../examples/kustomization/sts-example/tenant"
-  elif [ -e $1 ]; then
+  elif [ -z "$1" ] || [ -e "$1" ]; then
     namespace="tenant-lite"
     key=v1.min.io/tenant
     value=myminio

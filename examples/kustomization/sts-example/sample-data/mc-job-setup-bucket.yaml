@@ -58,7 +58,8 @@ spec:
             defaultMode: 0644
       containers:
         - name: mc
-          image: minio/mc
+          image: quay.io/minio/aistor/mc:latest
+          imagePullPolicy: IfNotPresent
           command: [ "/start-config/setup.sh" ]
           volumeMounts:
             - name: start-config
@@ -71,7 +72,7 @@ spec:
               subPath: ca.crt
           env:
             - name: MC_HOST_myminio
-              value: https://$(ACCESS_KEY):$(SECRET_KEY)@minio.minio-tenant-1.svc.cluster.local
+              value: https://minio.minio-tenant-1.svc.cluster.local
             - name: MC_STS_ENDPOINT_myminio
               value: https://sts.minio-operator.svc.cluster.local:4223/sts/minio-tenant-1
             - name: MC_WEB_IDENTITY_TOKEN_FILE_myminio

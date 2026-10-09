@@ -24,11 +24,11 @@ import (
 	"syscall"
 	"time"
 
-	stsv1alpha1 "github.com/minio/operator/pkg/apis/sts.min.io/v1alpha1"
+	stsv1alpha1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1alpha1"
 
 	"github.com/minio/pkg/env"
 
-	"github.com/minio/operator/pkg"
+	"github.com/lgcorzo/operator/pkg"
 
 	"k8s.io/client-go/tools/clientcmd"
 
@@ -37,10 +37,10 @@ import (
 
 	"k8s.io/klog/v2"
 
-	v2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	stsv1beta1 "github.com/minio/operator/pkg/apis/sts.min.io/v1beta1"
-	clientset "github.com/minio/operator/pkg/client/clientset/versioned"
-	informers "github.com/minio/operator/pkg/client/informers/externalversions"
+	v2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	stsv1beta1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1beta1"
+	clientset "github.com/lgcorzo/operator/pkg/client/clientset/versioned"
+	informers "github.com/lgcorzo/operator/pkg/client/informers/externalversions"
 	promclientset "github.com/prometheus-operator/prometheus-operator/pkg/client/versioned"
 	kubeinformers "k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"

@@ -19,9 +19,9 @@
 package fake
 
 import (
-	v2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	miniominiov2 "github.com/minio/operator/pkg/client/applyconfiguration/minio.min.io/v2"
-	typedminiominiov2 "github.com/minio/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
+	v2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	miniominiov2 "github.com/lgcorzo/operator/pkg/client/applyconfiguration/minio.min.io/v2"
+	typedminiominiov2 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
 	gentype "k8s.io/client-go/gentype"
 )
 

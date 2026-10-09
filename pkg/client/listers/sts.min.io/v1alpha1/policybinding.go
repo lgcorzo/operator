@@ -19,7 +19,7 @@
 package v1alpha1
 
 import (
-	stsminiov1alpha1 "github.com/minio/operator/pkg/apis/sts.min.io/v1alpha1"
+	stsminiov1alpha1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1alpha1"
 	labels "k8s.io/apimachinery/pkg/labels"
 	listers "k8s.io/client-go/listers"
 	cache "k8s.io/client-go/tools/cache"

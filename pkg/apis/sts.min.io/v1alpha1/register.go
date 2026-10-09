@@ -15,7 +15,7 @@
 package v1alpha1
 
 import (
-	operator "github.com/minio/operator/pkg/apis/sts.min.io"
+	operator "github.com/lgcorzo/operator/pkg/apis/sts.min.io"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"

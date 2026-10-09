@@ -22,10 +22,13 @@ if [ "${MC_VER}" == "latest" ] || [ -z "${MC_VER}" ]; then
 	DOWNLOAD_NAME="mc"
 fi
 
-wget -O mc https://dl.min.io/client/mc/"${MC_RELEASE_TYPE}"/linux-amd64/"${DOWNLOAD_NAME}"
-
-chmod +x mc
-mv mc /usr/local/bin/mc
+if [ ! -x /usr/local/bin/mc ]; then
+	wget -O mc https://dl.min.io/client/mc/"${MC_RELEASE_TYPE}"/linux-amd64/"${DOWNLOAD_NAME}" || true
+	if [ -s mc ]; then
+		chmod +x mc
+		mv mc /usr/local/bin/mc
+	fi
+fi
 
 echo "install-mc.sh: we should see mc output if mc got installed:"
 mc --version

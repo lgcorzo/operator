@@ -802,7 +802,7 @@ type KESConfig struct {
 	//
 	// Specify a https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes opaque secret] which contains environment variables to use for setting up the MinIO KES service. +
 	//
-	// See the https://github.com/minio/operator/blob/master/examples/kes-secret.yaml[MinIO Operator `console-secret.yaml`] for an example.
+	// See the https://github.com/lgcorzo/operator/blob/master/examples/kes-secret.yaml[MinIO Operator `console-secret.yaml`] for an example.
 	Configuration *corev1.LocalObjectReference `json:"kesSecret"`
 	// *Optional* +
 	//

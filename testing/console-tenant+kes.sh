@@ -41,7 +41,7 @@ function check_tenant_status_old() {
 
   echo "Tenant is created successfully, proceeding to validate 'mc admin info minio/'"
 
-  kubectl run admin-mc -i --tty --image quay.io/minio/mc \
+  kubectl run admin-mc -i --tty --image quay.io/minio/aistor/mc:latest --image-pull-policy=IfNotPresent \
     --env="MC_HOST_minio=https://console:console123@minio.tenant-lite.svc.cluster.local" \
     --command -- bash -c "until (mc admin info minio/); do echo 'waiting... for 5secs' && sleep 5; done"
 
@@ -97,7 +97,7 @@ function test_kes_tenant() {
   sed -i -e 's/ROLE_ID/'"$ROLE_ID"'/g' "${SCRIPT_DIR}/kes-config.yaml"
   sed -i -e 's/SECRET_ID/'"$SECRET_ID"'/g' "${SCRIPT_DIR}/kes-config.yaml"
   cp "${SCRIPT_DIR}/kes-config.yaml" "${SCRIPT_DIR}/../examples/kustomization/tenant-kes-encryption/kes-configuration-secret.yaml"
-  yq e -i '.spec.kes.image = "minio/kes:2025-03-12T09-35-18Z"' "${SCRIPT_DIR}/../examples/kustomization/tenant-kes-encryption/tenant.yaml"
+  yq e -i '.spec.kes.image = "quay.io/minio/kes:2025-03-12T09-35-18Z"' "${SCRIPT_DIR}/../examples/kustomization/tenant-kes-encryption/tenant.yaml"
   kubectl apply -k "${SCRIPT_DIR}/../examples/kustomization/tenant-kes-encryption"
 
   echo "Check Tenant Status in tenant-kms-encrypted namespace for myminio:"

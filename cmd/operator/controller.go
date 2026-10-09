@@ -18,8 +18,8 @@ import (
 	"flag"
 	"strconv"
 
+	"github.com/lgcorzo/operator/pkg/controller"
 	"github.com/minio/cli"
-	"github.com/minio/operator/pkg/controller"
 )
 
 // starts the controller

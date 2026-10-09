@@ -19,14 +19,14 @@
 package fake
 
 import (
-	applyconfiguration "github.com/minio/operator/pkg/client/applyconfiguration"
-	clientset "github.com/minio/operator/pkg/client/clientset/versioned"
-	miniov2 "github.com/minio/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
-	fakeminiov2 "github.com/minio/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2/fake"
-	stsv1alpha1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1alpha1"
-	fakestsv1alpha1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1alpha1/fake"
-	stsv1beta1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
-	fakestsv1beta1 "github.com/minio/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1/fake"
+	applyconfiguration "github.com/lgcorzo/operator/pkg/client/applyconfiguration"
+	clientset "github.com/lgcorzo/operator/pkg/client/clientset/versioned"
+	miniov2 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2"
+	fakeminiov2 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/minio.min.io/v2/fake"
+	stsv1alpha1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1alpha1"
+	fakestsv1alpha1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1alpha1/fake"
+	stsv1beta1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1"
+	fakestsv1beta1 "github.com/lgcorzo/operator/pkg/client/clientset/versioned/typed/sts.min.io/v1beta1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"

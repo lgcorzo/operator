@@ -14,7 +14,8 @@ spec:
       env:
         - name: MC_HOST_myminio
           value: https://minio:minio123@minio.tenant-certmanager.svc.cluster.local
-      image: quay.io/minio/mc
+      image: quay.io/minio/aistor/mc:latest
+      imagePullPolicy: IfNotPresent
       name: admin-mc
       volumeMounts:
         - name: certmanager-ca

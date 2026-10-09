@@ -19,13 +19,13 @@
 package applyconfiguration
 
 import (
-	v2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
-	v1alpha1 "github.com/minio/operator/pkg/apis/sts.min.io/v1alpha1"
-	v1beta1 "github.com/minio/operator/pkg/apis/sts.min.io/v1beta1"
-	internal "github.com/minio/operator/pkg/client/applyconfiguration/internal"
-	miniominiov2 "github.com/minio/operator/pkg/client/applyconfiguration/minio.min.io/v2"
-	stsminiov1alpha1 "github.com/minio/operator/pkg/client/applyconfiguration/sts.min.io/v1alpha1"
-	stsminiov1beta1 "github.com/minio/operator/pkg/client/applyconfiguration/sts.min.io/v1beta1"
+	v2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	v1alpha1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1alpha1"
+	v1beta1 "github.com/lgcorzo/operator/pkg/apis/sts.min.io/v1beta1"
+	internal "github.com/lgcorzo/operator/pkg/client/applyconfiguration/internal"
+	miniominiov2 "github.com/lgcorzo/operator/pkg/client/applyconfiguration/minio.min.io/v2"
+	stsminiov1alpha1 "github.com/lgcorzo/operator/pkg/client/applyconfiguration/sts.min.io/v1alpha1"
+	stsminiov1beta1 "github.com/lgcorzo/operator/pkg/client/applyconfiguration/sts.min.io/v1beta1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	testing "k8s.io/client-go/testing"

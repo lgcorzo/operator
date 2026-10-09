@@ -19,7 +19,7 @@ package legacy
 import (
 	"fmt"
 
-	miniov2 "github.com/minio/operator/pkg/apis/minio.min.io/v2"
+	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
 )
 
 // Legacy Prometheus
