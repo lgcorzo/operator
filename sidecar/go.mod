@@ -1,4 +1,4 @@
-module github.com/minio/operator/sidecar
+module github.com/lgcorzo/operator/sidecar
 
 go 1.23.0
 
@@ -6,8 +6,8 @@ toolchain go1.23.7
 
 require (
 	github.com/gorilla/mux v1.8.1
+	github.com/lgcorzo/operator v0.0.0-20250423195428-51a1c64002f8
 	github.com/minio/cli v1.24.2
-	github.com/minio/operator v0.0.0-20250423195428-51a1c64002f8
 	github.com/minio/pkg v1.7.5
 	k8s.io/api v0.32.3
 	k8s.io/apimachinery v0.32.3
@@ -15,7 +15,12 @@ require (
 	k8s.io/klog/v2 v2.130.1
 )
 
-replace github.com/minio/operator => ../
+replace github.com/lgcorzo/operator => ../
+
+replace (
+	github.com/minio/cli => github.com/lgcorzo/cli v1.24.2
+	github.com/minio/pkg => github.com/lgcorzo/pkg v1.7.5
+)
 
 replace golang.org/x/crypto => golang.org/x/crypto v0.36.0
 
