@@ -12,16 +12,6 @@ apt-get install jq -y
 echo "install-mc.sh: Install mc"
 echo "MC_HOT_FIX_REL=$MC_HOT_FIX_REL, MC_VER=$MC_VER"
 
-DOWNLOAD_NAME="archive/mc.${MC_VER}"
-MC_RELEASE_TYPE="release"
-if [ -n "${MC_HOT_FIX_REL}" ] && [ -n "${MC_VER}" ]; then
-	MC_RELEASE_TYPE="hotfixes"
-fi
-
-if [ "${MC_VER}" == "latest" ] || [ -z "${MC_VER}" ]; then
-	DOWNLOAD_NAME="mc"
-fi
-
 if [ ! -x /usr/local/bin/mc ]; then
 	if command -v docker >/dev/null 2>&1; then
 		docker run --rm --entrypoint cat ghcr.io/lgcorzo/mc:latest /usr/bin/mc > mc || \

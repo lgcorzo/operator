@@ -248,16 +248,6 @@ function install_minio() {
     mkdir ~/minio-installation
     cd ~/minio-installation || exit
 
-    DOWNLOAD_NAME="archive/minio.${MINIO_VERSION}"
-    MINIO_RELEASE_TYPE="release"
-    if [ -n "${MINIO_ENTERPRISE_TEST_WITH_HOTFIX_VERSION}" ] && [ -n "${MINIO_VERSION}" ]; then
-        MINIO_RELEASE_TYPE="hotfixes"
-    fi
-
-    if [ "${MINIO_VERSION}" == "latest" ] || [ -z "${MINIO_VERSION}" ]; then
-        DOWNLOAD_NAME="minio"
-    fi
-
     RESULT=$(uname -a | grep Darwin | grep -c arm64 | awk -F' ' '{print $1}')
     if [ "$RESULT" == "1" ]; then
         curl -sSfL -o minio "https://github.com/lgcorzo/minio/releases/latest/download/minio" || true
