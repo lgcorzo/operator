@@ -23,7 +23,13 @@ if [ "${MC_VER}" == "latest" ] || [ -z "${MC_VER}" ]; then
 fi
 
 if [ ! -x /usr/local/bin/mc ]; then
-	wget -O mc https://dl.min.io/client/mc/"${MC_RELEASE_TYPE}"/linux-amd64/"${DOWNLOAD_NAME}" || true
+	if command -v docker >/dev/null 2>&1; then
+		docker run --rm --entrypoint cat ghcr.io/lgcorzo/mc:latest /usr/bin/mc > mc || \
+		docker run --rm --entrypoint cat quay.io/minio/aistor/mc:latest /usr/bin/mc > mc || true
+	fi
+	if [ ! -s mc ]; then
+		wget -qO mc https://github.com/lgcorzo/mc/releases/latest/download/mc || true
+	fi
 	if [ -s mc ]; then
 		chmod +x mc
 		mv mc /usr/local/bin/mc
