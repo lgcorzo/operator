@@ -20,3 +20,7 @@ public.crt
 go_build_operator_
 operator.iml
 .run/
+
+# Graphify knowledge graph
+graphify-out/
+.graphifyignore

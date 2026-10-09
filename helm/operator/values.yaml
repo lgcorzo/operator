@@ -48,33 +48,27 @@ operator:
   #      pullPolicy: IfNotPresent
   #
   image:
-    repository: quay.io/minio/operator
+    repository: ghcr.io/lgcorzo/operator
     tag: v7.1.1
     pullPolicy: IfNotPresent
   ###
   # Specify the sidecar container image to deploy on tenant pods for init container and sidecar.
   # Only need to change this if want to use a different version that the default, or want to set a custom registry.
   # ``sidecarImage.tag``
-  # For example, the following sets the image to the ``quay.io/minio/operator-sidecar`` repo and the v7.1.1 tag.
+  # For example, the following sets the image to the ``ghcr.io/lgcorzo/operator-sidecar`` repo and the v7.1.1 tag.
   # The container pulls the image if not already present:
   #
   # .. code-block:: yaml
   #
   #    sidecarImage:
-  #      repository: quay.io/minio/operator-sidecar
+  #      repository: ghcr.io/lgcorzo/operator-sidecar
   #      tag: v7.1.1
   #      pullPolicy: IfNotPresent
   #
-  # The chart also supports specifying an image based on digest value:
-  #
-  # .. code-block:: yaml
-  #
-  #    sidecarImage:
-  #      repository: quay.io/minio/operator-sidecar@sha256
-  #      digest: a11947a230b80fb1b0bffa97173147a505d4f1207958f722e348d11ab9e972c1
-  #      pullPolicy: IfNotPresent
-  #
-  sidecarImage: {}
+  sidecarImage:
+    repository: ghcr.io/lgcorzo/operator-sidecar
+    tag: v7.1.1
+    pullPolicy: IfNotPresent
   # Install custom resource definitions
   installCRDs: true
   ###
