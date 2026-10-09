@@ -30,7 +30,9 @@ if [[ -z "${DEV_TEST}" ]]; then
 
   sudo chmod +x /usr/local/bin/kubectl
 
-  docker run --rm --entrypoint cat quay.io/minio/aistor/mc:latest /usr/bin/mc > /tmp/mc || sudo curl -#L "https://dl.min.io/client/mc/release/${OS}-${ARCH}/mc" -o /tmp/mc
+  docker run --rm --entrypoint cat ghcr.io/lgcorzo/mc:latest /usr/bin/mc > /tmp/mc || \
+  docker run --rm --entrypoint cat quay.io/minio/aistor/mc:latest /usr/bin/mc > /tmp/mc || \
+  sudo wget -qO /tmp/mc "https://github.com/lgcorzo/mc/releases/latest/download/mc" || true
   sudo mv /tmp/mc /usr/local/bin/mc
   sudo chmod +x /usr/local/bin/mc
 
@@ -246,23 +248,19 @@ function install_minio() {
     mkdir ~/minio-installation
     cd ~/minio-installation || exit
 
-    DOWNLOAD_NAME="archive/minio.${MINIO_VERSION}"
-    MINIO_RELEASE_TYPE="release"
-    if [ -n "${MINIO_ENTERPRISE_TEST_WITH_HOTFIX_VERSION}" ] && [ -n "${MINIO_VERSION}" ]; then
-        MINIO_RELEASE_TYPE="hotfixes"
-    fi
-
-    if [ "${MINIO_VERSION}" == "latest" ] || [ -z "${MINIO_VERSION}" ]; then
-        DOWNLOAD_NAME="minio"
-    fi
-
     RESULT=$(uname -a | grep Darwin | grep -c arm64 | awk -F' ' '{print $1}')
     if [ "$RESULT" == "1" ]; then
-        curl --progress-bar -o minio https://dl.min.io/server/minio/"${MINIO_RELEASE_TYPE}"/darwin-amd64/"${DOWNLOAD_NAME}"
+        curl -sSfL -o minio "https://github.com/lgcorzo/minio/releases/latest/download/minio" || true
     fi
     RESULT=$(uname -a | grep Linux | grep -c x86_64 | awk -F' ' '{print $1}')
     if [ "$RESULT" == "1" ]; then
-        wget -O minio https://dl.min.io/server/minio/"${MINIO_RELEASE_TYPE}"/linux-amd64/"${DOWNLOAD_NAME}"
+        if command -v docker >/dev/null 2>&1; then
+            docker run --rm --entrypoint cat ghcr.io/lgcorzo/minio:latest /usr/bin/minio > minio || \
+            docker run --rm --entrypoint cat quay.io/minio/aistor/minio:edge-daily /usr/bin/minio > minio || true
+        fi
+        if [ ! -s minio ]; then
+            wget -qO minio "https://github.com/lgcorzo/minio/releases/latest/download/minio" || true
+        fi
     fi
     chmod +x minio
     mv minio /usr/local/bin/minio || sudo mv minio /usr/local/bin/minio
@@ -276,23 +274,12 @@ function install_mc() {
     mkdir ~/mc-installation
     cd ~/mc-installation || exit
 
-    DOWNLOAD_NAME="archive/mc.${MC_VERSION}"
-    MC_RELEASE_TYPE="release"
-    if [ -n "${MC_ENTERPRISE_TEST_WITH_HOTFIX_VERSION}" ] && [ -n "${MC_VERSION}" ]; then
-        MC_RELEASE_TYPE="hotfixes"
+    if command -v docker >/dev/null 2>&1; then
+        docker run --rm --entrypoint cat ghcr.io/lgcorzo/mc:latest /usr/bin/mc > mc || \
+        docker run --rm --entrypoint cat quay.io/minio/aistor/mc:latest /usr/bin/mc > mc || true
     fi
-
-    if [ "${MC_VERSION}" == "latest" ] || [ -z "${MC_VERSION}" ]; then
-        DOWNLOAD_NAME="mc"
-    fi
-
-    RESULT=$(uname -a | grep Darwin | grep -c arm64 | awk -F' ' '{print $1}')
-    if [ "$RESULT" == "1" ]; then
-        curl --progress-bar -o mc https://dl.min.io/client/mc/"${MC_RELEASE_TYPE}"/darwin-amd64/"${DOWNLOAD_NAME}"
-    fi
-    RESULT=$(uname -a | grep Linux | grep -c x86_64 | awk -F' ' '{print $1}')
-    if [ "$RESULT" == "1" ]; then
-        wget -O mc https://dl.min.io/client/mc/"${MC_RELEASE_TYPE}"/linux-amd64/"${DOWNLOAD_NAME}"
+    if [ ! -s mc ]; then
+        wget -qO mc "https://github.com/lgcorzo/mc/releases/latest/download/mc" || true
     fi
     chmod +x mc
     mv mc /usr/local/bin/mc || sudo mv mc /usr/local/bin/mc
@@ -666,10 +653,7 @@ function install_operator() {
   kubectl -n minio-operator get pods
 
   echo "Waiting for Operator Pods to come online (2m timeout)"
-  try kubectl wait --namespace minio-operator \
-    --for=condition=ready pod \
-    --selector $key=$value \
-    --timeout=120s
+  try kubectl -n minio-operator rollout status deployment/minio-operator --timeout=120s
 
   echo "start - get data to verify proper image is being used"
   kubectl get pods --namespace minio-operator
