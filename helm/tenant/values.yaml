@@ -29,8 +29,8 @@ tenant:
   #
   #
   image:
-    repository: quay.io/minio/minio
-    tag: RELEASE.2025-04-08T15-41-24Z
+    repository: ghcr.io/lgcorzo/minio
+    tag: v7.1.1
     pullPolicy: IfNotPresent
   ###
   #
