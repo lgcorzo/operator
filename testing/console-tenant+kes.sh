@@ -41,7 +41,7 @@ function check_tenant_status_old() {
 
   echo "Tenant is created successfully, proceeding to validate 'mc admin info minio/'"
 
-  kubectl run admin-mc -i --tty --image quay.io/minio/mc \
+  kubectl run admin-mc -i --tty --image quay.io/minio/aistor/mc:latest --image-pull-policy=IfNotPresent \
     --env="MC_HOST_minio=https://console:console123@minio.tenant-lite.svc.cluster.local" \
     --command -- bash -c "until (mc admin info minio/); do echo 'waiting... for 5secs' && sleep 5; done"
 

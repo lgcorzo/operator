@@ -538,7 +538,7 @@ function load_kind_image() {
   echo "load_kind_image():"
   echo "* Loading image ${1}"
   docker pull "$1" || true
-  try kind load docker-image "$1"
+  kind load docker-image "$1" || true
 }
 
 # usage: load_kind_images
@@ -781,7 +781,7 @@ function check_tenant_status() {
 	  try kubectl delete pod admin-mc -n tenant-certmanager
 
   else
-    try kubectl run --restart=Never admin-mc --image quay.io/minio/mc \
+    try kubectl run --restart=Never admin-mc --image quay.io/minio/aistor/mc:latest --image-pull-policy=IfNotPresent \
       --env="MC_HOST_minio=https://${USER}:${PASSWORD}@minio.${1}.svc.cluster.local" \
       --command -- bash -c "until (mc admin info minio/ ); do echo 'waiting... for 5secs' && sleep 5; done"
     sleep 10
