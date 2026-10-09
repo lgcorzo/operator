@@ -10,8 +10,8 @@ keywords:
 home: https://min.io
 icon: https://min.io/resources/img/logo/MINIO_wordmark.png
 sources:
-  - https://github.com/lgcorzo/operator
+  - https://github.com/minio/operator
 maintainers:
-  - name: lgcorzo
-    email: dev@lgcorzo.com
+  - name: MinIO, Inc
+    email: dev@minio.io
 type: application

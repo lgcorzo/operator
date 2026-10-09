@@ -64,7 +64,7 @@ tenant:
   ###
   #
   # Specify `sideCars <https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/>`__.
-  # See https://github.com/lgcorzo/operator/blob/master/docs/tenant_crd.adoc#sidecars
+  # See https://github.com/minio/operator/blob/master/docs/tenant_crd.adoc#sidecars
   #
   sideCars: { }
   ###
@@ -385,7 +385,7 @@ tenant:
   # The ``name`` field must correspond to an entry in the ``additionalVolumes`` array.
   additionalVolumeMounts: [ ]
   # Define configuration for KES (stateless and distributed key-management system)
-  # Refer https://github.com/lgcorzo/kes
+  # Refer https://github.com/minio/kes
   #kes:
   #  ## Image field:
   #  # Image from tag (original behavior), for example:

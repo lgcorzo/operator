@@ -28,12 +28,12 @@ import (
 
 	"github.com/lgcorzo/operator/pkg/utils"
 
-	"github.com/minio/madmin-go/v3"
 	"github.com/lgcorzo/operator/pkg/common"
+	"github.com/minio/madmin-go/v3"
 	xcerts "github.com/minio/pkg/certs"
 
-	"github.com/minio/minio-go/v7/pkg/set"
 	"github.com/lgcorzo/operator/pkg/controller/certificates"
+	"github.com/minio/minio-go/v7/pkg/set"
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/klog/v2"

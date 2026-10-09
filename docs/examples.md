@@ -1,7 +1,7 @@
 # Tenant deployment examples with kustomize
 
 This document explains various yaml files listed in
-the [examples directory](https://github.com/lgcorzo/operator/tree/master/examples/kustomization) used to deploy a Tenant
+the [examples directory](https://github.com/minio/operator/tree/master/examples/kustomization) used to deploy a Tenant
 using MinIO Operator.
 
 ### Prerequisites
@@ -130,7 +130,7 @@ the user, the data will be encrypted at rest
 - Set the `app-role-id`, the `app-role-secret-id` and `key-prefix` in your KES configuration `YAML` file
 - Assuming your Tenant name is `myminio` and namespace is `tenant-kms-encrypted` create all the certificates and
   secrets as in the previous step
-- Generate new `KES` identity keypair (https://github.com/lgcorzo/kes), this is needed it for the authentication, `mTLS`
+- Generate new `KES` identity keypair (https://github.com/minio/kes), this is needed it for the authentication, `mTLS`
   between `MinIO` and `KES`:
 
   ```sh
@@ -191,4 +191,4 @@ kustomize build examples/kustomization/tenant-nodeport  | kubectl apply -f -
 For additional examples on how to deploy a tenant
 with [LDAP](https://min.io/docs/minio/kubernetes/upstream/operations/external-iam/configure-ad-ldap-external-identity-management.html)
 or [OIDC](https://min.io/docs/minio/kubernetes/upstream/operations/external-iam/configure-openid-external-identity-management.html)
-you can look at the [examples directory](https://github.com/lgcorzo/operator/tree/master/examples/kustomization)
+you can look at the [examples directory](https://github.com/minio/operator/tree/master/examples/kustomization)

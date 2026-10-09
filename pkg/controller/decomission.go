@@ -19,8 +19,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/minio/minio-go/v7/pkg/set"
 	miniov2 "github.com/lgcorzo/operator/pkg/apis/minio.min.io/v2"
+	"github.com/minio/minio-go/v7/pkg/set"
 	corev1 "k8s.io/api/core/v1"
 	k8serrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"

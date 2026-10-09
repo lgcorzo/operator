@@ -412,11 +412,6 @@ func (in *Pool) DeepCopyInto(out *Pool) {
 		*out = new(string)
 		**out = **in
 	}
-	if in.TerminationGracePeriodSeconds != nil {
-		in, out := &in.TerminationGracePeriodSeconds, &out.TerminationGracePeriodSeconds
-		*out = new(int64)
-		**out = **in
-	}
 	return
 }
 

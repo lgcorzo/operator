@@ -25,21 +25,20 @@ import (
 // PoolApplyConfiguration represents a declarative configuration of the Pool type for use
 // with apply.
 type PoolApplyConfiguration struct {
-	Name                          *string                       `json:"name,omitempty"`
-	Servers                       *int32                        `json:"servers,omitempty"`
-	VolumesPerServer              *int32                        `json:"volumesPerServer,omitempty"`
-	VolumeClaimTemplate           *v1.PersistentVolumeClaim     `json:"volumeClaimTemplate,omitempty"`
-	Resources                     *v1.ResourceRequirements      `json:"resources,omitempty"`
-	NodeSelector                  map[string]string             `json:"nodeSelector,omitempty"`
-	Affinity                      *v1.Affinity                  `json:"affinity,omitempty"`
-	Tolerations                   []v1.Toleration               `json:"tolerations,omitempty"`
-	TopologySpreadConstraints     []v1.TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`
-	SecurityContext               *v1.PodSecurityContext        `json:"securityContext,omitempty"`
-	ContainerSecurityContext      *v1.SecurityContext           `json:"containerSecurityContext,omitempty"`
-	Annotations                   map[string]string             `json:"annotations,omitempty"`
-	Labels                        map[string]string             `json:"labels,omitempty"`
-	RuntimeClassName              *string                       `json:"runtimeClassName,omitempty"`
-	TerminationGracePeriodSeconds *int64                        `json:"terminationGracePeriodSeconds,omitempty"`
+	Name                      *string                       `json:"name,omitempty"`
+	Servers                   *int32                        `json:"servers,omitempty"`
+	VolumesPerServer          *int32                        `json:"volumesPerServer,omitempty"`
+	VolumeClaimTemplate       *v1.PersistentVolumeClaim     `json:"volumeClaimTemplate,omitempty"`
+	Resources                 *v1.ResourceRequirements      `json:"resources,omitempty"`
+	NodeSelector              map[string]string             `json:"nodeSelector,omitempty"`
+	Affinity                  *v1.Affinity                  `json:"affinity,omitempty"`
+	Tolerations               []v1.Toleration               `json:"tolerations,omitempty"`
+	TopologySpreadConstraints []v1.TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`
+	SecurityContext           *v1.PodSecurityContext        `json:"securityContext,omitempty"`
+	ContainerSecurityContext  *v1.SecurityContext           `json:"containerSecurityContext,omitempty"`
+	Annotations               map[string]string             `json:"annotations,omitempty"`
+	Labels                    map[string]string             `json:"labels,omitempty"`
+	RuntimeClassName          *string                       `json:"runtimeClassName,omitempty"`
 }
 
 // PoolApplyConfiguration constructs a declarative configuration of the Pool type for use with
@@ -179,13 +178,5 @@ func (b *PoolApplyConfiguration) WithLabels(entries map[string]string) *PoolAppl
 // If called multiple times, the RuntimeClassName field is set to the value of the last call.
 func (b *PoolApplyConfiguration) WithRuntimeClassName(value string) *PoolApplyConfiguration {
 	b.RuntimeClassName = &value
-	return b
-}
-
-// WithTerminationGracePeriodSeconds sets the TerminationGracePeriodSeconds field in the declarative configuration to the given value
-// and returns the receiver, so that objects can be built by chaining "With" function invocations.
-// If called multiple times, the TerminationGracePeriodSeconds field is set to the value of the last call.
-func (b *PoolApplyConfiguration) WithTerminationGracePeriodSeconds(value int64) *PoolApplyConfiguration {
-	b.TerminationGracePeriodSeconds = &value
 	return b
 }

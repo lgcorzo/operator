@@ -17,8 +17,8 @@
 package main
 
 import (
-	"github.com/minio/cli"
 	"github.com/lgcorzo/operator/sidecar/pkg/validator"
+	"github.com/minio/cli"
 )
 
 // starts the controller

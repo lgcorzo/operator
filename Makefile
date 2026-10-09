@@ -7,7 +7,7 @@ VERSIONV ?= $(shell git describe --tags | sed 's,v,,g')
 endif
 TAG ?= "minio/operator:$(VERSION)"
 SHA ?= $(shell git rev-parse --short HEAD)
-LDFLAGS ?= "-s -w -X github.com/lgcorzo/operator/pkg.ReleaseTag=$(VERSIONV) -X github.com/lgcorzo/operator/pkg.Version=$(VERSION) -X github.com/lgcorzo/operator/pkg.ShortCommitID=$(SHA)"
+LDFLAGS ?= "-s -w -X github.com/minio/operator/pkg.ReleaseTag=$(VERSIONV) -X github.com/minio/operator/pkg.Version=$(VERSION) -X github.com/minio/operator/pkg.ShortCommitID=$(SHA)"
 GOPATH := $(shell go env GOPATH)
 GOARCH := $(shell go env GOARCH)
 GOOS := $(shell go env GOOS)

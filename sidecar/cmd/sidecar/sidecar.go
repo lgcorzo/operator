@@ -20,8 +20,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/minio/cli"
 	"github.com/lgcorzo/operator/sidecar/pkg/sidecar"
+	"github.com/minio/cli"
 )
 
 // starts the controller

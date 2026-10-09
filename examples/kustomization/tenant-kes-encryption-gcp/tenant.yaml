@@ -5,7 +5,7 @@ metadata:
   namespace: minio-tenant
 spec:
   ## Define configuration for KES (stateless and distributed key-management system)
-  ## Refer https://github.com/lgcorzo/kes
+  ## Refer https://github.com/minio/kes
   kes:
     image: "" # minio/kes:v0.22.3
     env: [ ]

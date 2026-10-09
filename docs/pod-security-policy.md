@@ -7,7 +7,7 @@ This document explains how to apply `PodSecurityPolicy` to MinIO Pods created by
 Use the example to apply a custom `PodSecurityPolicy` to all the MinIO Pods created by the Operator.
 
 ```
-kubectl create -f https://github.com/lgcorzo/operator/tree/master/examples/tenant-pod-security-policy.yaml
+kubectl create -f https://github.com/minio/operator/tree/master/examples/tenant-pod-security-policy.yaml
 ```
 
 This file creates a custom PodSecurityPolicy. Then it creates a `ClusterRole` attached to the `PodSecurityPolicy`. Finally a `ClusterRoleBinding` bounds the `ClusterRole` to a `ServiceAccount` which is added to all the MinIO Pods created by the MinIO Operator.

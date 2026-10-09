@@ -6,9 +6,9 @@ FROM registry.access.redhat.com/ubi9/ubi-micro:latest
 
 ARG TAG
 
-LABEL name="MinIO Operator" \
-      vendor="lgcorzo" \
-      maintainer="lgcorzo <dev@lgcorzo.com>" \
+LABEL name="MinIO" \
+      vendor="MinIO Inc <dev@min.io>" \
+      maintainer="MinIO Inc <dev@min.io>" \
       version="${TAG}" \
       release="${TAG}" \
       summary="MinIO Operator brings native support for MinIO and Encryption to Kubernetes." \

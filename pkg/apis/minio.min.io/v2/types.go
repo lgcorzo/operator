@@ -162,7 +162,7 @@ type TenantSpec struct {
 	ExternalCaCertSecret []*LocalCertificateReference `json:"externalCaCertSecret,omitempty"`
 	// *Optional* +
 	//
-	// Enables mTLS authentication between the MinIO Tenant pods and https://github.com/lgcorzo/kes[MinIO KES]. *Required* for enabling connectivity between the MinIO Tenant and MinIO KES. +
+	// Enables mTLS authentication between the MinIO Tenant pods and https://github.com/minio/kes[MinIO KES]. *Required* for enabling connectivity between the MinIO Tenant and MinIO KES. +
 	//
 	// Specify a https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes TLS secrets]. The MinIO Operator copies the specified certificate to every MinIO server pod in the tenant. The secret *must* contain the following fields: +
 	//
@@ -170,7 +170,7 @@ type TenantSpec struct {
 	//
 	// * `type` - Specify `kubernetes.io/tls` +
 	//
-	// The specified certificate *must* correspond to an identity on the KES server. See the https://github.com/lgcorzo/kes/wiki/Configuration#policy-configuration[KES Wiki] for more information on KES identities. +
+	// The specified certificate *must* correspond to an identity on the KES server. See the https://github.com/minio/kes/wiki/Configuration#policy-configuration[KES Wiki] for more information on KES identities. +
 	//
 	// If deploying KES with the MinIO Operator, include the hash of the certificate as part of the <<k8s-api-github-com-minio-operator-pkg-apis-minio-min-io-v2-kesconfig,`kes`>> object specification. +
 	//
@@ -264,7 +264,7 @@ type TenantSpec struct {
 	CertConfig *CertificateConfig `json:"certConfig,omitempty"`
 	// *Optional* +
 	//
-	// Directs the MinIO Operator to deploy the https://github.com/lgcorzo/kes[MinIO Key Encryption Service] (KES) using the specified configuration. The MinIO KES supports performing server-side encryption of objects on the MiNIO Tenant. +
+	// Directs the MinIO Operator to deploy the https://github.com/minio/kes[MinIO Key Encryption Service] (KES) using the specified configuration. The MinIO KES supports performing server-side encryption of objects on the MiNIO Tenant. +
 	//
 	//
 	//+optional
@@ -769,7 +769,7 @@ type AuditConfig struct {
 	DiskCapacityGB *int `json:"diskCapacityGB,omitempty"`
 }
 
-// KESConfig (`kes`) defines the configuration of the https://github.com/lgcorzo/kes[MinIO Key Encryption Service] (KES) StatefulSet deployed as part of the MinIO Tenant. KES supports Server-Side Encryption of objects using an external Key Management Service (KMS). +
+// KESConfig (`kes`) defines the configuration of the https://github.com/minio/kes[MinIO Key Encryption Service] (KES) StatefulSet deployed as part of the MinIO Tenant. KES supports Server-Side Encryption of objects using an external Key Management Service (KMS). +
 type KESConfig struct {
 	// *Optional* +
 	//
