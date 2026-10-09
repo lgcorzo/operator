@@ -63,14 +63,20 @@ function setup_kind() {
   fi
   echo "Kind is ready"
   try kubectl get nodes
-  echo "Preloading MinIO and mc images into Kind cluster..."
-  docker pull quay.io/minio/aistor/minio:edge-daily || true
-  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
-  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:latest || true
-  docker tag quay.io/minio/aistor/minio:edge-daily minio/minio:RELEASE.2025-04-08T15-41-24Z || true
-  docker tag quay.io/minio/aistor/minio:edge-daily minio/minio:latest || true
-  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z || true
-  docker tag quay.io/minio/aistor/minio:edge-daily quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z.hotfix.0fbf4c10f || true
+  echo "Preloading MinIO, KES and mc images into Kind cluster..."
+  docker pull ghcr.io/lgcorzo/minio:latest || docker pull quay.io/minio/aistor/minio:edge-daily || true
+  IMAGE_SRC="ghcr.io/lgcorzo/minio:latest"
+  if ! docker inspect "$IMAGE_SRC" >/dev/null 2>&1; then
+    IMAGE_SRC="quay.io/minio/aistor/minio:edge-daily"
+  fi
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:latest || true
+  docker tag "$IMAGE_SRC" minio/minio:RELEASE.2025-04-08T15-41-24Z || true
+  docker tag "$IMAGE_SRC" minio/minio:latest || true
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z || true
+  docker tag "$IMAGE_SRC" quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z.hotfix.0fbf4c10f || true
+  docker tag "$IMAGE_SRC" quay.io/minio/aistor/minio:edge-daily || true
+  kind load docker-image "$IMAGE_SRC" || true
   kind load docker-image quay.io/minio/aistor/minio:edge-daily || true
   kind load docker-image quay.io/minio/minio:RELEASE.2025-04-08T15-41-24Z || true
   kind load docker-image quay.io/minio/minio:latest || true
@@ -78,6 +84,11 @@ function setup_kind() {
   kind load docker-image minio/minio:latest || true
   kind load docker-image quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z || true
   kind load docker-image quay.io/minio/minio:RELEASE.2024-07-10T18-41-49Z.hotfix.0fbf4c10f || true
+
+  docker pull quay.io/minio/kes:2025-03-12T09-35-18Z || true
+  docker tag quay.io/minio/kes:2025-03-12T09-35-18Z minio/kes:2025-03-12T09-35-18Z || true
+  kind load docker-image quay.io/minio/kes:2025-03-12T09-35-18Z || true
+  kind load docker-image minio/kes:2025-03-12T09-35-18Z || true
 
   docker pull quay.io/minio/aistor/mc:latest || true
   docker tag quay.io/minio/aistor/mc:latest quay.io/minio/mc:latest || true
