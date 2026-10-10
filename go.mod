@@ -1,10 +1,10 @@
 module github.com/lgcorzo/operator
 
-go 1.24.0
+go 1.25.0
 
 require (
 	github.com/blang/semver/v4 v4.0.0
-	github.com/docker/cli v28.0.4+incompatible
+	github.com/docker/cli v29.2.0+incompatible
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-openapi/swag v0.23.1 // indirect
@@ -24,13 +24,13 @@ require (
 	github.com/prometheus-operator/prometheus-operator/pkg/client v0.76.2
 	github.com/rs/xid v1.6.0 // indirect
 	github.com/secure-io/sio-go v0.3.1 // indirect
-	github.com/stretchr/testify v1.10.0
-	golang.org/x/crypto v0.36.0
-	golang.org/x/net v0.38.0 // indirect
+	github.com/stretchr/testify v1.12.1
+	golang.org/x/crypto v0.51.0
+	golang.org/x/net v0.55.0 // indirect
 	golang.org/x/oauth2 v0.28.0
 	// Added to include security fix for
 	// https://github.com/golang/go/issues/56152
-	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/text v0.37.0 // indirect
 	golang.org/x/time v0.11.0
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/api v0.32.3
@@ -54,7 +54,7 @@ replace (
 require (
 	github.com/go-test/deep v1.1.1
 	github.com/minio/kes-go v0.2.1
-	golang.org/x/mod v0.24.0
+	golang.org/x/mod v0.35.0
 	sigs.k8s.io/controller-runtime v0.20.4
 )
 
@@ -104,7 +104,6 @@ require (
 	github.com/opencontainers/image-spec v1.1.1 // indirect
 	github.com/philhofer/fwd v1.1.3-0.20240916144458-20a13a1f6b7c // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/common v0.63.0 // indirect
@@ -115,7 +114,7 @@ require (
 	github.com/safchain/ethtool v0.5.10 // indirect
 	github.com/shirou/gopsutil/v3 v3.24.5 // indirect
 	github.com/shoenig/go-m1cpu v0.1.6 // indirect
-	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/sirupsen/logrus v1.10.2 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/tinylib/msgp v1.2.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.15 // indirect
@@ -123,10 +122,12 @@ require (
 	github.com/vbatts/tar-split v0.12.1 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
-	golang.org/x/sync v0.12.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/term v0.30.0 // indirect
-	golang.org/x/tools v0.31.0 // indirect
+	go.yaml.in/yaml/v3 v3.0.5 // indirect
+	golang.org/x/sync v0.20.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
+	golang.org/x/term v0.43.0 // indirect
+	golang.org/x/tools v0.44.0 // indirect
+	golang.org/x/tools/go/packages/packagestest v0.1.1-deprecated // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.12.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
