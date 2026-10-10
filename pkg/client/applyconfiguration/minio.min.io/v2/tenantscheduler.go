@@ -20,7 +20,12 @@ package v2
 
 // TenantSchedulerApplyConfiguration represents a declarative configuration of the TenantScheduler type for use
 // with apply.
+//
+// TenantScheduler (`scheduler`) - Object describing Kubernetes Scheduler to use for deploying the MinIO Tenant.
 type TenantSchedulerApplyConfiguration struct {
+	// *Optional* +
+	//
+	// Specify the name of the https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/[Kubernetes scheduler] to be used to schedule Tenant pods
 	Name *string `json:"name,omitempty"`
 }
 

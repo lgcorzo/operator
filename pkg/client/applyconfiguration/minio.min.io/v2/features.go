@@ -20,10 +20,21 @@ package v2
 
 // FeaturesApplyConfiguration represents a declarative configuration of the Features type for use
 // with apply.
+//
+// Features (`features`) - Object describing which MinIO features to enable/disable in the MinIO Tenant. +
 type FeaturesApplyConfiguration struct {
-	BucketDNS  *bool                            `json:"bucketDNS,omitempty"`
-	Domains    *TenantDomainsApplyConfiguration `json:"domains,omitempty"`
-	EnableSFTP *bool                            `json:"enableSFTP,omitempty"`
+	// *Optional* +
+	//
+	// Specify `true` to allow clients to access buckets using the DNS path `<bucket>.minio.default.svc.cluster.local`. Defaults to `false`.
+	BucketDNS *bool `json:"bucketDNS,omitempty"`
+	// *Optional* +
+	//
+	// Specify a list of domains used to access MinIO and Console.
+	Domains *TenantDomainsApplyConfiguration `json:"domains,omitempty"`
+	// *Optional* +
+	//
+	// Starts minio server with SFTP support
+	EnableSFTP *bool `json:"enableSFTP,omitempty"`
 }
 
 // FeaturesApplyConfiguration constructs a declarative configuration of the Features type for use with

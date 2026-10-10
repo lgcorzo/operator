@@ -20,8 +20,16 @@ package v2
 
 // ExposeServicesApplyConfiguration represents a declarative configuration of the ExposeServices type for use
 // with apply.
+//
+// ExposeServices (`exposeServices`) defines the exposure of the MinIO object storage and Console services. +
 type ExposeServicesApplyConfiguration struct {
-	MinIO   *bool `json:"minio,omitempty"`
+	// *Optional* +
+	//
+	// Directs the Operator to expose the MinIO service. Defaults to `false`. +
+	MinIO *bool `json:"minio,omitempty"`
+	// *Optional* +
+	//
+	// Directs the Operator to expose the MinIO Console service. Defaults to `false`. +
 	Console *bool `json:"console,omitempty"`
 }
 

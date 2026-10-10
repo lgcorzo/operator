@@ -20,13 +20,33 @@ package v2
 
 // ServiceMetadataApplyConfiguration represents a declarative configuration of the ServiceMetadata type for use
 // with apply.
+//
+// ServiceMetadata (`serviceMetadata`) defines custom labels and annotations for the MinIO Object Storage service and/or MinIO Console service. +
 type ServiceMetadataApplyConfiguration struct {
-	MinIOServiceLabels        map[string]string `json:"minioServiceLabels,omitempty"`
-	MinIOServiceAnnotations   map[string]string `json:"minioServiceAnnotations,omitempty"`
-	ConsoleServiceLabels      map[string]string `json:"consoleServiceLabels,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these labels to the MinIO service
+	MinIOServiceLabels map[string]string `json:"minioServiceLabels,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these annotations to the MinIO service
+	MinIOServiceAnnotations map[string]string `json:"minioServiceAnnotations,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these labels to the Console service
+	ConsoleServiceLabels map[string]string `json:"consoleServiceLabels,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these annotations to the Console service
 	ConsoleServiceAnnotations map[string]string `json:"consoleServiceAnnotations,omitempty"`
-	KESServiceLabels          map[string]string `json:"kesServiceLabels,omitempty"`
-	KESServiceAnnotations     map[string]string `json:"kesServiceAnnotations,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these labels to the KES service
+	KESServiceLabels map[string]string `json:"kesServiceLabels,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these annotations to the KES service
+	KESServiceAnnotations map[string]string `json:"kesServiceAnnotations,omitempty"`
 }
 
 // ServiceMetadataApplyConfiguration constructs a declarative configuration of the ServiceMetadata type for use with

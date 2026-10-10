@@ -20,8 +20,12 @@ package v1alpha1
 
 // ApplicationApplyConfiguration represents a declarative configuration of the Application type for use
 // with apply.
+//
+// Application defines the `Namespace` and `ServiceAccount` to authorize the usage of the policies listed
 type ApplicationApplyConfiguration struct {
-	Namespace      *string `json:"namespace,omitempty"`
+	// *Required* +
+	Namespace *string `json:"namespace,omitempty"`
+	// *Required* +
 	ServiceAccount *string `json:"serviceaccount,omitempty"`
 }
 
