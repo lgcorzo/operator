@@ -20,12 +20,29 @@ package v2
 
 // CustomCertificateConfigApplyConfiguration represents a declarative configuration of the CustomCertificateConfig type for use
 // with apply.
+//
+// CustomCertificateConfig (`customCertificateConfig`) provides attributes associated of the TLS certificates manually added to the Operator as part of tenant creation. These fields contain no data if there are no custom TLS certificates.
 type CustomCertificateConfigApplyConfiguration struct {
-	CertName  *string  `json:"certName,omitempty"`
-	Domains   []string `json:"domains,omitempty"`
-	Expiry    *string  `json:"expiry,omitempty"`
-	ExpiresIn *string  `json:"expiresIn,omitempty"`
-	SerialNo  *string  `json:"serialNo,omitempty"`
+	// *Optional* +
+	//
+	// Output one or more `CertName` attributes associated with the manually provided TLS certificates. +
+	CertName *string `json:"certName,omitempty"`
+	// *Optional* +
+	//
+	// Output one or more `Domains` attributes associated with the manually provided TLS certificates. +
+	Domains []string `json:"domains,omitempty"`
+	// *Optional* +
+	//
+	// Output one or more `Expiry` attributes associated with the manually provided TLS certificates. +
+	Expiry *string `json:"expiry,omitempty"`
+	// *Optional* +
+	//
+	// Output one or more `ExpiresIn` attributes associated with the manually provided TLS certificates. +
+	ExpiresIn *string `json:"expiresIn,omitempty"`
+	// *Optional* +
+	//
+	// Output one or more `SerialNo` attributes associated with the manually provided TLS certificates. +
+	SerialNo *string `json:"serialNo,omitempty"`
 }
 
 // CustomCertificateConfigApplyConfiguration constructs a declarative configuration of the CustomCertificateConfig type for use with

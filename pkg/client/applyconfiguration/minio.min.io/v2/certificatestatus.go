@@ -20,8 +20,12 @@ package v2
 
 // CertificateStatusApplyConfiguration represents a declarative configuration of the CertificateStatus type for use
 // with apply.
+//
+// CertificateStatus keeps track of all the certificates managed by the operator
 type CertificateStatusApplyConfiguration struct {
-	AutoCertEnabled    *bool                                 `json:"autoCertEnabled,omitempty"`
+	// AutoCertEnabled registers whether we know if the tenant has autocert enabled
+	AutoCertEnabled *bool `json:"autoCertEnabled,omitempty"`
+	// Provides the output of the `client`, `minio`, and`minioCAs` custom TLS certificates manually added to the Operator.
 	CustomCertificates *CustomCertificatesApplyConfiguration `json:"customCertificates,omitempty"`
 }
 

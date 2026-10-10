@@ -26,43 +26,241 @@ import (
 
 // TenantSpecApplyConfiguration represents a declarative configuration of the TenantSpec type for use
 // with apply.
+//
+// TenantSpec (`spec`) defines the configuration of a MinIO Tenant object. +
+//
+// The following parameters are specific to the `minio.min.io/v2` MinIO CRD API `spec` definition added as part of the MinIO Operator v4.0.0. +
+//
+// For more complete documentation on this object, see the https://min.io/docs/minio/kubernetes/upstream/operations/installation.html[MinIO Kubernetes Documentation]. +
 type TenantSpecApplyConfiguration struct {
-	Pools                                []PoolApplyConfiguration                     `json:"pools,omitempty"`
-	Image                                *string                                      `json:"image,omitempty"`
-	ImagePullSecret                      *v1.LocalObjectReference                     `json:"imagePullSecret,omitempty"`
-	PodManagementPolicy                  *appsv1.PodManagementPolicyType              `json:"podManagementPolicy,omitempty"`
-	Env                                  []v1.EnvVar                                  `json:"env,omitempty"`
-	ExternalCertSecret                   []*miniominiov2.LocalCertificateReference    `json:"externalCertSecret,omitempty"`
-	ExternalCaCertSecret                 []*miniominiov2.LocalCertificateReference    `json:"externalCaCertSecret,omitempty"`
-	ExternalClientCertSecret             *LocalCertificateReferenceApplyConfiguration `json:"externalClientCertSecret,omitempty"`
-	ExternalClientCertSecrets            []*miniominiov2.LocalCertificateReference    `json:"externalClientCertSecrets,omitempty"`
-	Mountpath                            *string                                      `json:"mountPath,omitempty"`
-	Subpath                              *string                                      `json:"subPath,omitempty"`
-	RequestAutoCert                      *bool                                        `json:"requestAutoCert,omitempty"`
-	CertExpiryAlertThreshold             *int32                                       `json:"certExpiryAlertThreshold,omitempty"`
-	Liveness                             *v1.Probe                                    `json:"liveness,omitempty"`
-	Readiness                            *v1.Probe                                    `json:"readiness,omitempty"`
-	Startup                              *v1.Probe                                    `json:"startup,omitempty"`
-	Lifecycle                            *v1.Lifecycle                                `json:"lifecycle,omitempty"`
-	Features                             *FeaturesApplyConfiguration                  `json:"features,omitempty"`
-	CertConfig                           *CertificateConfigApplyConfiguration         `json:"certConfig,omitempty"`
-	KES                                  *KESConfigApplyConfiguration                 `json:"kes,omitempty"`
-	PrometheusOperator                   *bool                                        `json:"prometheusOperator,omitempty"`
-	PrometheusOperatorScrapeMetricsPaths []string                                     `json:"prometheusOperatorScrapeMetricsPaths,omitempty"`
-	ServiceAccountName                   *string                                      `json:"serviceAccountName,omitempty"`
-	PriorityClassName                    *string                                      `json:"priorityClassName,omitempty"`
-	ImagePullPolicy                      *v1.PullPolicy                               `json:"imagePullPolicy,omitempty"`
-	SideCars                             *SideCarsApplyConfiguration                  `json:"sideCars,omitempty"`
-	ExposeServices                       *ExposeServicesApplyConfiguration            `json:"exposeServices,omitempty"`
-	ServiceMetadata                      *ServiceMetadataApplyConfiguration           `json:"serviceMetadata,omitempty"`
-	PoolsMetadata                        *PoolsMetadataApplyConfiguration             `json:"poolsMetadata,omitempty"`
-	Users                                []v1.LocalObjectReference                    `json:"users,omitempty"`
-	Buckets                              []BucketApplyConfiguration                   `json:"buckets,omitempty"`
-	Logging                              *LoggingApplyConfiguration                   `json:"logging,omitempty"`
-	Configuration                        *v1.LocalObjectReference                     `json:"configuration,omitempty"`
-	InitContainers                       []v1.Container                               `json:"initContainers,omitempty"`
-	AdditionalVolumes                    []v1.Volume                                  `json:"additionalVolumes,omitempty"`
-	AdditionalVolumeMounts               []v1.VolumeMount                             `json:"additionalVolumeMounts,omitempty"`
+	// *Required* +
+	//
+	// An array of objects describing each MinIO server pool deployed in the MinIO Tenant. Each pool consists of a set of MinIO server pods which "pool" their storage resources for supporting object storage and retrieval requests. Each server pool is independent of all others and supports horizontal scaling of available storage resources in the MinIO Tenant. +
+	//
+	// The MinIO Tenant `spec` *must have* at least *one* element in the `pools` array. +
+	//
+	// See the https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html[MinIO Operator CRD] reference for the `pools` object for examples and more complete documentation.
+	Pools []PoolApplyConfiguration `json:"pools,omitempty"`
+	// *Optional* +
+	//
+	// The Docker image to use when deploying `minio` server pods. Defaults to {minio-image}. +
+	Image *string `json:"image,omitempty"`
+	// *Optional* +
+	//
+	// Specify the secret key to use for pulling images from a private Docker repository. +
+	ImagePullSecret *v1.LocalObjectReference `json:"imagePullSecret,omitempty"`
+	// *Optional* +
+	//
+	// Pod Management Policy for pod created by StatefulSet
+	PodManagementPolicy *appsv1.PodManagementPolicyType `json:"podManagementPolicy,omitempty"`
+	// *Optional* +
+	//
+	// If provided, the MinIO Operator adds the specified environment variables when deploying the Tenant resource.
+	Env []v1.EnvVar `json:"env,omitempty"`
+	// *Optional* +
+	//
+	// Enables TLS with SNI support on each MinIO pod in the tenant. If `externalCertSecret` is omitted *and* `requestAutoCert` is set to `false`, the MinIO Tenant deploys *without* TLS enabled. +
+	//
+	// Specify an array of https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes TLS secrets]. The MinIO Operator copies the specified certificates to every MinIO server pod in the tenant. When the MinIO pod/service responds to a TLS connection request, it uses SNI to select the certificate with matching `subjectAlternativeName`. +
+	//
+	// Each element in the `externalCertSecret` array is an object containing the following fields: +
+	//
+	// * - `name` - The name of the Kubernetes secret containing the TLS certificate. +
+	//
+	// * - `type` - Specify `kubernetes.io/tls` +
+	//
+	// See the https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html#create-tenant-security-section[MinIO Operator CRD] reference for examples and more complete documentation on configuring TLS for MinIO Tenants.
+	ExternalCertSecret []*miniominiov2.LocalCertificateReference `json:"externalCertSecret,omitempty"`
+	// *Optional* +
+	//
+	// Allows MinIO server pods to verify client TLS certificates signed by a Certificate Authority not in the pod's trust store. +
+	//
+	// Specify an array of https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes TLS secrets]. The MinIO Operator copies the specified certificates to every MinIO server pod in the tenant. +
+	//
+	// Each element in the `externalCertSecret` array is an object containing the following fields: +
+	//
+	// * - `name` - The name of the Kubernetes secret containing the Certificate Authority. +
+	//
+	// * - `type` - Specify `kubernetes.io/tls`. +
+	//
+	// See the https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html#create-tenant-security-section[MinIO Operator CRD] reference for examples and more complete documentation on configuring TLS for MinIO Tenants.
+	ExternalCaCertSecret []*miniominiov2.LocalCertificateReference `json:"externalCaCertSecret,omitempty"`
+	// *Optional* +
+	//
+	// Enables mTLS authentication between the MinIO Tenant pods and https://github.com/minio/kes[MinIO KES]. *Required* for enabling connectivity between the MinIO Tenant and MinIO KES. +
+	//
+	// Specify a https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes TLS secrets]. The MinIO Operator copies the specified certificate to every MinIO server pod in the tenant. The secret *must* contain the following fields: +
+	//
+	// * `name` - The name of the Kubernetes secret containing the TLS certificate. +
+	//
+	// * `type` - Specify `kubernetes.io/tls` +
+	//
+	// The specified certificate *must* correspond to an identity on the KES server. See the https://github.com/minio/kes/wiki/Configuration#policy-configuration[KES Wiki] for more information on KES identities. +
+	//
+	// If deploying KES with the MinIO Operator, include the hash of the certificate as part of the <<k8s-api-github-com-minio-operator-pkg-apis-minio-min-io-v2-kesconfig,`kes`>> object specification. +
+	//
+	// See the https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html#create-tenant-security-section[MinIO Operator CRD] reference for examples and more complete documentation on configuring TLS for MinIO Tenants.
+	ExternalClientCertSecret *LocalCertificateReferenceApplyConfiguration `json:"externalClientCertSecret,omitempty"`
+	// *Optional* +
+	//
+	// Provide support for mounting additional client certificate into MinIO Tenant pods
+	// Multiple client certificates will be mounted using the following folder structure: +
+	//
+	// * certs +
+	//
+	// * * client-0 +
+	//
+	// * * * client.crt +
+	//
+	// * * * client.key +
+	//
+	// * * client-1 +
+	//
+	// * * * client.crt +
+	//
+	// * * * client.key +
+	//
+	// * * * client-2 +
+	//
+	// * * client.crt +
+	//
+	// * * *  client.key +
+	//
+	// Specify a https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes TLS secrets]. The MinIO Operator copies the specified certificate to every MinIO server pod in the tenant that later can be referenced using environment variables. The secret *must* contain the following fields: +
+	//
+	// * `name` - The name of the Kubernetes secret containing the TLS certificate. +
+	//
+	// * `type` - Specify `kubernetes.io/tls` +
+	ExternalClientCertSecrets []*miniominiov2.LocalCertificateReference `json:"externalClientCertSecrets,omitempty"`
+	// *Optional* +
+	//
+	// Mount path for MinIO volume (PV). Defaults to `/export`
+	Mountpath *string `json:"mountPath,omitempty"`
+	// *Optional* +
+	//
+	// Subpath inside mount path. This is the directory where MinIO stores data. Default to `""“ (empty)
+	Subpath *string `json:"subPath,omitempty"`
+	// *Optional* +
+	//
+	// Enables using https://kubernetes.io/docs/tasks/tls/managing-tls-in-a-cluster/[Kubernetes-based TLS certificate generation] and signing for pods and services in the MinIO Tenant. +
+	//
+	// * Specify `true` to explicitly enable automatic certificate generate (Default). +
+	//
+	// * Specify `false` to disable automatic certificate generation. +
+	//
+	// If `requestAutoCert` is set to `false` *and* `externalCertSecret` is omitted, the MinIO Tenant deploys *without* TLS enabled.
+	//
+	// See the https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html#create-tenant-security-section[MinIO Operator CRD] reference for examples and more complete documentation on configuring TLS for MinIO Tenants.
+	RequestAutoCert *bool `json:"requestAutoCert,omitempty"`
+	// CertExpiryAlertThreshold is the minimum number of days to expiry before an alert for an expiring certificate is fired.
+	CertExpiryAlertThreshold *int32 `json:"certExpiryAlertThreshold,omitempty"`
+	// Liveness Probe for container liveness. Container will be restarted if the probe fails.
+	Liveness *v1.Probe `json:"liveness,omitempty"`
+	// Readiness Probe for container readiness. Container will be removed from service endpoints if the probe fails.
+	Readiness *v1.Probe `json:"readiness,omitempty"`
+	// Startup Probe allows to configure a max grace period for a pod to start before getting traffic routed to it.
+	Startup *v1.Probe `json:"startup,omitempty"`
+	// Lifecycle hooks for container.
+	Lifecycle *v1.Lifecycle `json:"lifecycle,omitempty"`
+	// S3 related features can be disabled or enabled such as `bucketDNS` etc.
+	Features *FeaturesApplyConfiguration `json:"features,omitempty"`
+	// *Optional* +
+	//
+	// Enables setting the `CommonName`, `Organization`, and `dnsName` attributes for all TLS certificates automatically generated by the Operator. Configuring this object has no effect if `requestAutoCert` is `false`. +
+	CertConfig *CertificateConfigApplyConfiguration `json:"certConfig,omitempty"`
+	// *Optional* +
+	//
+	// Directs the MinIO Operator to deploy the https://github.com/minio/kes[MinIO Key Encryption Service] (KES) using the specified configuration. The MinIO KES supports performing server-side encryption of objects on the MiNIO Tenant. +
+	KES *KESConfigApplyConfiguration `json:"kes,omitempty"`
+	// *Optional* +
+	//
+	// Directs the MinIO Operator to use prometheus operator. +
+	//
+	// Tenant scrape configuration will be added to prometheus managed by the prometheus-operator.
+	PrometheusOperator *bool `json:"prometheusOperator,omitempty"`
+	// *Optional* +
+	//
+	// API end point(s) to scrape metrics from PrometheusOperatorScrapeMetricsPaths
+	// If PrometheusOperator: true and PrometheusOperatorScrapeMetricsPaths is empty, will add `/minio/v2/metrics/cluster` to the list of paths to scrape as default like before.
+	PrometheusOperatorScrapeMetricsPaths []string `json:"prometheusOperatorScrapeMetricsPaths,omitempty"`
+	// *Optional* +
+	//
+	// The https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/[Kubernetes Service Account] to use for running MinIO pods created as part of the Tenant. +
+	ServiceAccountName *string `json:"serviceAccountName,omitempty"`
+	// *Optional* +
+	//
+	// Indicates the Pod priority and therefore importance of a Pod relative to other Pods in the cluster.
+	// This is applied to MinIO pods only. +
+	//
+	// Refer Kubernetes https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass[Priority Class documentation] for more complete documentation.
+	PriorityClassName *string `json:"priorityClassName,omitempty"`
+	// *Optional* +
+	//
+	// The pull policy for the MinIO Docker image. Specify one of the following: +
+	//
+	// * `Always` +
+	//
+	// * `Never` +
+	//
+	// * `IfNotPresent` (Default) +
+	//
+	// Refer Kubernetes documentation for details https://kubernetes.io/docs/concepts/containers/images#updating-images
+	ImagePullPolicy *v1.PullPolicy `json:"imagePullPolicy,omitempty"`
+	// *Optional* +
+	//
+	// A list of containers to run as sidecars along every MinIO Pod deployed in the tenant.
+	SideCars *SideCarsApplyConfiguration `json:"sideCars,omitempty"`
+	// *Optional* +
+	//
+	// Directs the Operator to expose the MinIO and/or Console services. +
+	ExposeServices *ExposeServicesApplyConfiguration `json:"exposeServices,omitempty"`
+	// *Optional* +
+	//
+	// Specify custom labels and annotations to append to the MinIO service and/or Console service.
+	ServiceMetadata *ServiceMetadataApplyConfiguration `json:"serviceMetadata,omitempty"`
+	// *Optional* +
+	//
+	// Specify custom labels and annotations to append to all pool statefulsets and pods.
+	PoolsMetadata *PoolsMetadataApplyConfiguration `json:"poolsMetadata,omitempty"`
+	// *Optional* +
+	//
+	// An array of https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes opaque secrets] to use for generating MinIO users during tenant provisioning. +
+	//
+	// Each element in the array is an object consisting of a key-value pair `name: <string>`, where the `<string>` references an opaque Kubernetes secret. +
+	//
+	// Each referenced Kubernetes secret must include the following fields: +
+	//
+	// * `CONSOLE_ACCESS_KEY` - The "Username" for the MinIO user +
+	//
+	// * `CONSOLE_SECRET_KEY` - The "Password" for the MinIO user +
+	//
+	// The Operator creates each user with the `consoleAdmin` policy by default. You can change the assigned policy after the Tenant starts. +
+	Users []v1.LocalObjectReference `json:"users,omitempty"`
+	// *Optional* +
+	//
+	// Create buckets when creating a new tenant. Skip if bucket with given name already exists
+	Buckets []BucketApplyConfiguration `json:"buckets,omitempty"`
+	// *Optional* +
+	//
+	// Enable JSON, Anonymous logging for MinIO tenants.
+	Logging *LoggingApplyConfiguration `json:"logging,omitempty"`
+	// *Optional* +
+	//
+	// Specify a secret that contains additional environment variable configurations to be used for the MinIO pools.
+	// The secret is expected to have a key named config.env containing all exported environment variables for MinIO+
+	Configuration *v1.LocalObjectReference `json:"configuration,omitempty"`
+	// *Optional* +
+	//
+	// Add custom initContainers to StatefulSet
+	InitContainers []v1.Container `json:"initContainers,omitempty"`
+	// *Optional* +
+	//
+	// If provided, statefulset will add these volumes. You should set the rules for the corresponding volumes and volume mounts. We will not test this rule, k8s will show the result.
+	AdditionalVolumes []v1.Volume `json:"additionalVolumes,omitempty"`
+	// *Optional* +
+	//
+	// If provided, statefulset will add these volumes. You should set the rules for the corresponding volumes and volume mounts. We will not test this rule, k8s will show the result.
+	AdditionalVolumeMounts []v1.VolumeMount `json:"additionalVolumeMounts,omitempty"`
 }
 
 // TenantSpecApplyConfiguration constructs a declarative configuration of the TenantSpec type for use with
