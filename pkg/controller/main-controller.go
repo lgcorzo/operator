@@ -791,7 +791,7 @@ func (c *Controller) syncHandler(key string) (Result, error) {
 	if err != nil {
 		if errors.Is(err, ErrEmptyRootCredentials) {
 			if _, err2 := c.updateTenantStatus(ctx, tenant, err.Error(), 0); err2 != nil {
-				klog.V(2).Infof(err2.Error())
+				klog.V(2).Info(err2.Error())
 			}
 			c.recorder.Event(tenant, corev1.EventTypeWarning, "MissingCreds", "Tenant is missing root credentials")
 			return WrapResult(Result{}, nil)
@@ -818,10 +818,10 @@ func (c *Controller) syncHandler(key string) (Result, error) {
 
 	// Validate the MinIO Tenant
 	if err = tenant.Validate(); err != nil {
-		klog.V(2).Infof(err.Error())
+		klog.V(2).Info(err.Error())
 		var err2 error
 		if _, err2 = c.updateTenantStatus(ctx, tenant, err.Error(), 0); err2 != nil {
-			klog.V(2).Infof(err2.Error())
+			klog.V(2).Info(err2.Error())
 		}
 		// return nil so we don't re-queue this work item
 		return WrapResult(Result{}, nil)
@@ -851,20 +851,20 @@ func (c *Controller) syncHandler(key string) (Result, error) {
 			autoCertEnabled = tenant.AutoCert()
 		}
 		if tenant, err = c.updateCertificatesStatus(ctx, tenant, autoCertEnabled); err != nil {
-			klog.V(2).Infof(err.Error())
+			klog.V(2).Info(err.Error())
 		}
 	}
 
 	// Custom certificates
 	if customCertificates, err := c.getCustomCertificates(ctx, tenant); err == nil {
 		if newTenant, err := c.updateCustomCertificatesStatus(ctx, tenant, customCertificates); err != nil {
-			klog.V(2).Infof(err.Error())
+			klog.V(2).Info(err.Error())
 		} else {
 			// Only change tenant if there was no error, otherwise tenant is being deleted
 			tenant = newTenant
 		}
 	} else {
-		klog.V(2).Infof(err.Error())
+		klog.V(2).Info(err.Error())
 	}
 
 	// validate the minio certificates
