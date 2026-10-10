@@ -25,23 +25,56 @@ import (
 
 // TenantStatusApplyConfiguration represents a declarative configuration of the TenantStatus type for use
 // with apply.
+//
+// TenantStatus is the status for a Tenant resource
 type TenantStatusApplyConfiguration struct {
-	CurrentState       *string                              `json:"currentState,omitempty"`
-	AvailableReplicas  *int32                               `json:"availableReplicas,omitempty"`
-	Revision           *int32                               `json:"revision,omitempty"`
-	SyncVersion        *string                              `json:"syncVersion,omitempty"`
-	Certificates       *CertificateStatusApplyConfiguration `json:"certificates,omitempty"`
-	Pools              []PoolStatusApplyConfiguration       `json:"pools,omitempty"`
-	WriteQuorum        *int32                               `json:"writeQuorum,omitempty"`
-	DrivesOnline       *int32                               `json:"drivesOnline,omitempty"`
-	DrivesOffline      *int32                               `json:"drivesOffline,omitempty"`
-	DrivesHealing      *int32                               `json:"drivesHealing,omitempty"`
-	HealthStatus       *miniominiov2.HealthStatus           `json:"healthStatus,omitempty"`
-	HealthMessage      *string                              `json:"healthMessage,omitempty"`
-	WaitingOnReady     *v1.Time                             `json:"waitingOnReady,omitempty"`
-	Usage              *TenantUsageApplyConfiguration       `json:"usage,omitempty"`
-	ProvisionedUsers   *bool                                `json:"provisionedUsers,omitempty"`
-	ProvisionedBuckets *bool                                `json:"provisionedBuckets,omitempty"`
+	CurrentState      *string `json:"currentState,omitempty"`
+	AvailableReplicas *int32  `json:"availableReplicas,omitempty"`
+	Revision          *int32  `json:"revision,omitempty"`
+	SyncVersion       *string `json:"syncVersion,omitempty"`
+	// Keeps track of all the TLS certificates managed by the operator
+	Certificates *CertificateStatusApplyConfiguration `json:"certificates,omitempty"`
+	// All the pools get an individual status
+	Pools []PoolStatusApplyConfiguration `json:"pools,omitempty"`
+	// *Optional* +
+	//
+	// Minimum number of disks that need to be online
+	WriteQuorum *int32 `json:"writeQuorum,omitempty"`
+	// *Optional* +
+	//
+	// Total number of drives online for the tenant
+	DrivesOnline *int32 `json:"drivesOnline,omitempty"`
+	// *Optional* +
+	//
+	// Total number of drives offline
+	DrivesOffline *int32 `json:"drivesOffline,omitempty"`
+	// *Optional* +
+	//
+	// Drives with healing going on
+	DrivesHealing *int32 `json:"drivesHealing,omitempty"`
+	// *Optional* +
+	//
+	// Health State of the tenant
+	HealthStatus *miniominiov2.HealthStatus `json:"healthStatus,omitempty"`
+	// *Optional* +
+	//
+	// Health Message regarding the State of the tenant
+	HealthMessage *string `json:"healthMessage,omitempty"`
+	// *Optional* +
+	//
+	// If set, we will wait until cleared for up a given time
+	WaitingOnReady *v1.Time `json:"waitingOnReady,omitempty"`
+	// *Optional* +
+	//
+	// Information about tenant usage
+	Usage *TenantUsageApplyConfiguration `json:"usage,omitempty"`
+	// ProvisionedUsers keeps track for telling if operator already created initial users for the tenant
+	ProvisionedUsers *bool `json:"provisionedUsers,omitempty"`
+	// *Optional* +
+	//
+	// Health Message regarding the State of the tenant
+	// ProvisionedBuckets keeps track for telling if operator already created initial buckets for the tenant
+	ProvisionedBuckets *bool `json:"provisionedBuckets,omitempty"`
 }
 
 // TenantStatusApplyConfiguration constructs a declarative configuration of the TenantStatus type for use with

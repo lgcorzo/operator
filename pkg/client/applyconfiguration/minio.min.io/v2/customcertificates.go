@@ -24,9 +24,20 @@ import (
 
 // CustomCertificatesApplyConfiguration represents a declarative configuration of the CustomCertificates type for use
 // with apply.
+//
+// CustomCertificates (`customCertificates`) provides groupings of the TLS certificates manually added to the Operator as part of tenant creation. These fields contain no data if there are no custom TLS certificates.
 type CustomCertificatesApplyConfiguration struct {
-	Client   []*miniominiov2.CustomCertificateConfig `json:"client,omitempty"`
-	Minio    []*miniominiov2.CustomCertificateConfig `json:"minio,omitempty"`
+	// *Optional* +
+	//
+	// Client
+	Client []*miniominiov2.CustomCertificateConfig `json:"client,omitempty"`
+	// *Optional* +
+	//
+	// Minio
+	Minio []*miniominiov2.CustomCertificateConfig `json:"minio,omitempty"`
+	// *Optional* +
+	//
+	// Certificate Authorities
 	MinioCAs []*miniominiov2.CustomCertificateConfig `json:"minioCAs,omitempty"`
 }
 

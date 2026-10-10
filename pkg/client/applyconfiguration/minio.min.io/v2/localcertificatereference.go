@@ -20,8 +20,16 @@ package v2
 
 // LocalCertificateReferenceApplyConfiguration represents a declarative configuration of the LocalCertificateReference type for use
 // with apply.
+//
+// LocalCertificateReference (`externalCertSecret`, `externalCaCertSecret`,`clientCertSecret`) contains a Kubernetes secret containing TLS certificates or Certificate Authority files for use with enabling TLS in the MinIO Tenant. +
 type LocalCertificateReferenceApplyConfiguration struct {
+	// *Required* +
+	//
+	// The name of the Kubernetes secret containing the TLS certificate or Certificate Authority file. +
 	Name *string `json:"name,omitempty"`
+	// *Required* +
+	//
+	// The type of Kubernetes secret. Specify `kubernetes.io/tls` +
 	Type *string `json:"type,omitempty"`
 }
 

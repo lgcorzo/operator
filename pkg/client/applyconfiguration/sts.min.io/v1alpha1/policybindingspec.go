@@ -20,9 +20,15 @@ package v1alpha1
 
 // PolicyBindingSpecApplyConfiguration represents a declarative configuration of the PolicyBindingSpec type for use
 // with apply.
+//
+// PolicyBindingSpec (`spec`) defines the configuration of a MinIO PolicyBinding object. +
 type PolicyBindingSpecApplyConfiguration struct {
+	// *Required* +
+	//
+	// The Application Property identifies the namespace and service account that will be authorized
 	Application *ApplicationApplyConfiguration `json:"application,omitempty"`
-	Policies    []string                       `json:"policies,omitempty"`
+	// *Required* +
+	Policies []string `json:"policies,omitempty"`
 }
 
 // PolicyBindingSpecApplyConfiguration constructs a declarative configuration of the PolicyBindingSpec type for use with

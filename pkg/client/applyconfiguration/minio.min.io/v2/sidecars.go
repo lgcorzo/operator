@@ -24,11 +24,31 @@ import (
 
 // SideCarsApplyConfiguration represents a declarative configuration of the SideCars type for use
 // with apply.
+//
+// SideCars (`sidecars`) defines a list of containers that the Operator attaches to each MinIO server pods in the `pool`.
 type SideCarsApplyConfiguration struct {
-	Containers           []v1.Container             `json:"containers,omitempty"`
+	// *Optional* +
+	//
+	// List of containers to run inside the Pod
+	Containers []v1.Container `json:"containers,omitempty"`
+	// *Optional* +
+	//
+	// volumeClaimTemplates is a list of claims that pods are allowed to reference.
+	// The StatefulSet controller is responsible for mapping network identities to
+	// claims in a way that maintains the identity of a pod. Every claim in
+	// this list must have at least one matching (by name) volumeMount in one
+	// container in the template. A claim in this list takes precedence over
+	// any volumes in the template, with the same name.
 	VolumeClaimTemplates []v1.PersistentVolumeClaim `json:"volumeClaimTemplates,omitempty"`
-	Volumes              []v1.Volume                `json:"volumes,omitempty"`
-	Resources            *v1.ResourceRequirements   `json:"resources,omitempty"`
+	// *Optional* +
+	//
+	// List of volumes that can be mounted by containers belonging to the pod.
+	// More info: https://kubernetes.io/docs/concepts/storage/volumes
+	Volumes []v1.Volume `json:"volumes,omitempty"`
+	// *Optional* +
+	//
+	// sidecar's Resource, initcontainer will use that if set.
+	Resources *v1.ResourceRequirements `json:"resources,omitempty"`
 }
 
 // SideCarsApplyConfiguration constructs a declarative configuration of the SideCars type for use with

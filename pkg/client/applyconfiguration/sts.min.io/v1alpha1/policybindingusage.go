@@ -20,6 +20,8 @@ package v1alpha1
 
 // PolicyBindingUsageApplyConfiguration represents a declarative configuration of the PolicyBindingUsage type for use
 // with apply.
+//
+// PolicyBindingUsage are metrics regarding the usage of the policyBinding
 type PolicyBindingUsageApplyConfiguration struct {
 	Authorizations *int64 `json:"authotizations,omitempty"`
 }

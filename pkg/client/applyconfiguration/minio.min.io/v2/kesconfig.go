@@ -24,27 +24,125 @@ import (
 
 // KESConfigApplyConfiguration represents a declarative configuration of the KESConfig type for use
 // with apply.
+//
+// KESConfig (`kes`) defines the configuration of the https://github.com/minio/kes[MinIO Key Encryption Service] (KES) StatefulSet deployed as part of the MinIO Tenant. KES supports Server-Side Encryption of objects using an external Key Management Service (KMS). +
 type KESConfigApplyConfiguration struct {
-	Replicas                  *int32                                       `json:"replicas,omitempty"`
-	Image                     *string                                      `json:"image,omitempty"`
-	ImagePullPolicy           *v1.PullPolicy                               `json:"imagePullPolicy,omitempty"`
-	ServiceAccountName        *string                                      `json:"serviceAccountName,omitempty"`
-	Configuration             *v1.LocalObjectReference                     `json:"kesSecret,omitempty"`
-	ExternalCertSecret        *LocalCertificateReferenceApplyConfiguration `json:"externalCertSecret,omitempty"`
-	ClientCertSecret          *LocalCertificateReferenceApplyConfiguration `json:"clientCertSecret,omitempty"`
-	GCPCredentialSecretName   *string                                      `json:"gcpCredentialSecretName,omitempty"`
-	GCPWorkloadIdentityPool   *string                                      `json:"gcpWorkloadIdentityPool,omitempty"`
-	Annotations               map[string]string                            `json:"annotations,omitempty"`
-	Labels                    map[string]string                            `json:"labels,omitempty"`
-	Resources                 *v1.ResourceRequirements                     `json:"resources,omitempty"`
-	NodeSelector              map[string]string                            `json:"nodeSelector,omitempty"`
-	Tolerations               []v1.Toleration                              `json:"tolerations,omitempty"`
-	Affinity                  *v1.Affinity                                 `json:"affinity,omitempty"`
-	TopologySpreadConstraints []v1.TopologySpreadConstraint                `json:"topologySpreadConstraints,omitempty"`
-	KeyName                   *string                                      `json:"keyName,omitempty"`
-	SecurityContext           *v1.PodSecurityContext                       `json:"securityContext,omitempty"`
-	ContainerSecurityContext  *v1.SecurityContext                          `json:"containerSecurityContext,omitempty"`
-	Env                       []v1.EnvVar                                  `json:"env,omitempty"`
+	// *Optional* +
+	//
+	// Specify the number of replica KES pods to deploy in the tenant. Defaults to `2`.
+	Replicas *int32 `json:"replicas,omitempty"`
+	// *Optional* +
+	//
+	// The Docker image to use for deploying MinIO KES. Defaults to {kes-image}. +
+	Image *string `json:"image,omitempty"`
+	// *Optional* +
+	//
+	// The pull policy for the MinIO Docker image. Specify one of the following: +
+	//
+	// * `Always` +
+	//
+	// * `Never` +
+	//
+	// * `IfNotPresent` (Default) +
+	//
+	// Refer to the Kubernetes documentation for details https://kubernetes.io/docs/concepts/containers/images#updating-images
+	ImagePullPolicy *v1.PullPolicy `json:"imagePullPolicy,omitempty"`
+	// *Optional* +
+	//
+	// The https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/[Kubernetes Service Account] to use for running MinIO KES pods created as part of the Tenant. +
+	ServiceAccountName *string `json:"serviceAccountName,omitempty"`
+	// *Required* +
+	//
+	// Specify a https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes opaque secret] which contains environment variables to use for setting up the MinIO KES service. +
+	//
+	// See the https://github.com/lgcorzo/operator/blob/master/examples/kes-secret.yaml[MinIO Operator `console-secret.yaml`] for an example.
+	Configuration *v1.LocalObjectReference `json:"kesSecret,omitempty"`
+	// *Optional* +
+	//
+	// Enables TLS with SNI support on each MinIO KES pod in the tenant. If `externalCertSecret` is omitted *and* `spec.requestAutoCert` is set to `false`, MinIO KES pods deploy *without* TLS enabled. +
+	//
+	// Specify a https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes TLS secret]. The MinIO Operator copies the specified certificate to every MinIO pod in the tenant. When the MinIO pod/service responds to a TLS connection request, it uses SNI to select the certificate with matching `subjectAlternativeName`. +
+	//
+	// Specify an object containing the following fields: +
+	//
+	// * - `name` - The name of the Kubernetes secret containing the TLS certificate. +
+	//
+	// * - `type` - Specify `kubernetes.io/tls` +
+	//
+	// See the https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html#procedure-command-line[MinIO Operator CRD] reference for examples and more complete documentation on configuring TLS for MinIO Tenants.
+	ExternalCertSecret *LocalCertificateReferenceApplyConfiguration `json:"externalCertSecret,omitempty"`
+	// *Optional* +
+	//
+	// Specify a a https://kubernetes.io/docs/concepts/configuration/secret/[Kubernetes TLS secret] containing a custom root Certificate Authority and x.509 certificate to use for performing mTLS authentication with an external Key Management Service, such as Hashicorp Vault. +
+	//
+	// Specify an object containing the following fields: +
+	//
+	// * - `name` - The name of the Kubernetes secret containing the Certificate Authority and x.509 Certificate. +
+	//
+	// * - `type` - Specify `kubernetes.io/tls` +
+	ClientCertSecret *LocalCertificateReferenceApplyConfiguration `json:"clientCertSecret,omitempty"`
+	// *Optional* +
+	//
+	// Specify the GCP default credentials to be used for KES to authenticate to GCP key store
+	GCPCredentialSecretName *string `json:"gcpCredentialSecretName,omitempty"`
+	// *Optional* +
+	//
+	// Specify the name of the workload identity pool (This is required for generating service account token)
+	GCPWorkloadIdentityPool *string `json:"gcpWorkloadIdentityPool,omitempty"`
+	// *Optional* +
+	//
+	// If provided, use these annotations for KES Object Meta annotations
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// *Optional* +
+	//
+	// If provided, use these labels for KES Object Meta labels
+	Labels map[string]string `json:"labels,omitempty"`
+	// *Optional* +
+	//
+	// Object specification for specifying CPU and memory https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/[resource allocations] or limits in the MinIO tenant. +
+	Resources *v1.ResourceRequirements `json:"resources,omitempty"`
+	// *Optional* +
+	//
+	// The filter for the Operator to apply when selecting which nodes on which to deploy MinIO KES pods. The Operator only selects those nodes whose labels match the specified selector. +
+	//
+	// See the Kubernetes documentation on https://kubernetes.io/docs/concepts/configuration/assign-pod-node/[Assigning Pods to Nodes] for more information.
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+	// *Optional* +
+	//
+	// Specify one or more https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/[Kubernetes tolerations] to apply to MinIO KES pods.
+	Tolerations []v1.Toleration `json:"tolerations,omitempty"`
+	// *Optional* +
+	//
+	// Specify node affinity, pod affinity, and pod anti-affinity for the KES pods. +
+	Affinity *v1.Affinity `json:"affinity,omitempty"`
+	// *Optional* +
+	//
+	// Specify one or more https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/[Kubernetes Topology Spread Constraints] to apply to pods deployed in the MinIO pool.
+	TopologySpreadConstraints []v1.TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`
+	// *Optional* +
+	//
+	// If provided, use this as the name of the key that KES creates on the KMS backend
+	KeyName *string `json:"keyName,omitempty"`
+	// Specify the https://kubernetes.io/docs/tasks/configure-pod-container/security-context/[Security Context] of MinIO KES pods. The Operator supports only the following pod security fields: +
+	//
+	// * `fsGroup` +
+	//
+	// * `fsGroupChangePolicy` +
+	//
+	// * `runAsGroup` +
+	//
+	// * `runAsNonRoot` +
+	//
+	// * `runAsUser` +
+	//
+	// * `seLinuxOptions` +
+	SecurityContext *v1.PodSecurityContext `json:"securityContext,omitempty"`
+	// Specify the https://kubernetes.io/docs/tasks/configure-pod-container/security-context/[Security Context] of MinIO KES pods.
+	ContainerSecurityContext *v1.SecurityContext `json:"containerSecurityContext,omitempty"`
+	// *Optional* +
+	//
+	// If provided, the MinIO Operator adds the specified environment variables when deploying the KES resource.
+	Env []v1.EnvVar `json:"env,omitempty"`
 }
 
 // KESConfigApplyConfiguration constructs a declarative configuration of the KESConfig type for use with

@@ -24,10 +24,15 @@ import (
 
 // PoolStatusApplyConfiguration represents a declarative configuration of the PoolStatus type for use
 // with apply.
+//
+// PoolStatus keeps track of all the pools and their current state
 type PoolStatusApplyConfiguration struct {
-	SSName                *string                 `json:"ssName,omitempty"`
-	State                 *miniominiov2.PoolState `json:"state,omitempty"`
-	LegacySecurityContext *bool                   `json:"legacySecurityContext,omitempty"`
+	SSName *string                 `json:"ssName,omitempty"`
+	State  *miniominiov2.PoolState `json:"state,omitempty"`
+	// LegacySecurityContext stands for Legacy SecurityContext. It represents that these pool was created before v4.2.3 when
+	// we introduced the default securityContext as non-root, thus we should keep running this Pool without a
+	// Security Context
+	LegacySecurityContext *bool `json:"legacySecurityContext,omitempty"`
 }
 
 // PoolStatusApplyConfiguration constructs a declarative configuration of the PoolStatus type for use with

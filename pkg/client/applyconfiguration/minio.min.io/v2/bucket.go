@@ -20,6 +20,8 @@ package v2
 
 // BucketApplyConfiguration represents a declarative configuration of the Bucket type for use
 // with apply.
+//
+// Bucket describes the default created buckets
 type BucketApplyConfiguration struct {
 	Name          *string `json:"name,omitempty"`
 	Region        *string `json:"region,omitempty"`

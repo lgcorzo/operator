@@ -20,6 +20,8 @@ package v2
 
 // LoggingApplyConfiguration represents a declarative configuration of the Logging type for use
 // with apply.
+//
+// Logging describes Logging for MinIO tenants.
 type LoggingApplyConfiguration struct {
 	JSON      *bool `json:"json,omitempty"`
 	Anonymous *bool `json:"anonymous,omitempty"`

@@ -20,8 +20,16 @@ package v2
 
 // PoolsMetadataApplyConfiguration represents a declarative configuration of the PoolsMetadata type for use
 // with apply.
+//
+// PoolsMetadata (`poolsMetadata`) defines custom labels and annotations for the MinIO pool stateful sets / pods. +
 type PoolsMetadataApplyConfiguration struct {
-	Labels      map[string]string `json:"labels,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these labels to the MinIO statefulset / pods
+	Labels map[string]string `json:"labels,omitempty"`
+	// *Optional* +
+	//
+	// If provided, append these annotations to the MinIO statefulset / pods
 	Annotations map[string]string `json:"annotations,omitempty"`
 }
 

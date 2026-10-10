@@ -20,9 +20,13 @@ package v1alpha1
 
 // PolicyBindingStatusApplyConfiguration represents a declarative configuration of the PolicyBindingStatus type for use
 // with apply.
+//
+// PolicyBindingStatus is the status for a PolicyBinding resource
 type PolicyBindingStatusApplyConfiguration struct {
-	CurrentState *string                               `json:"currentState,omitempty"`
-	Usage        *PolicyBindingUsageApplyConfiguration `json:"usage,omitempty"`
+	// *Required* +
+	CurrentState *string `json:"currentState,omitempty"`
+	// Keeps track of the invocations related to the PolicyBinding
+	Usage *PolicyBindingUsageApplyConfiguration `json:"usage,omitempty"`
 }
 
 // PolicyBindingStatusApplyConfiguration constructs a declarative configuration of the PolicyBindingStatus type for use with

@@ -24,21 +24,93 @@ import (
 
 // PoolApplyConfiguration represents a declarative configuration of the Pool type for use
 // with apply.
+//
+// Pool (`pools`) defines a MinIO server pool on a Tenant. Each pool consists of a set of MinIO server pods which "pool" their storage resources for supporting object storage and retrieval requests. Each server pool is independent of all others and supports horizontal scaling of available storage resources in the MinIO Tenant. +
+//
+// See the https://min.io/docs/minio/kubernetes/upstream/operations/install-deploy-manage/deploy-minio-tenant.html#procedure-command-line[MinIO Operator CRD] reference for the `pools` object for examples and more complete documentation. +
 type PoolApplyConfiguration struct {
-	Name                      *string                       `json:"name,omitempty"`
-	Servers                   *int32                        `json:"servers,omitempty"`
-	VolumesPerServer          *int32                        `json:"volumesPerServer,omitempty"`
-	VolumeClaimTemplate       *v1.PersistentVolumeClaim     `json:"volumeClaimTemplate,omitempty"`
-	Resources                 *v1.ResourceRequirements      `json:"resources,omitempty"`
-	NodeSelector              map[string]string             `json:"nodeSelector,omitempty"`
-	Affinity                  *v1.Affinity                  `json:"affinity,omitempty"`
-	Tolerations               []v1.Toleration               `json:"tolerations,omitempty"`
+	// *Required*
+	// Specify the name of the pool. The Operator automatically generates the pool name if this field is omitted.
+	Name *string `json:"name,omitempty"`
+	// *Required*
+	//
+	// The number of MinIO server pods to deploy in the pool. The minimum value is `2`.
+	//
+	// The MinIO Operator requires a minimum of `4` volumes per pool. Specifically, the result of `pools.servers X pools.volumesPerServer` must be greater than `4`. +
+	Servers *int32 `json:"servers,omitempty"`
+	// *Required* +
+	//
+	// The number of Persistent Volume Claims to generate for each MinIO server pod in the pool. +
+	//
+	// The MinIO Operator requires a minimum of `4` volumes per pool. Specifically, the result of `pools.servers X pools.volumesPerServer` must be greater than `4`. +
+	VolumesPerServer *int32 `json:"volumesPerServer,omitempty"`
+	// *Required* +
+	//
+	// Specify the configuration options for the MinIO Operator to use when generating Persistent Volume Claims for the MinIO tenant. +
+	VolumeClaimTemplate *v1.PersistentVolumeClaim `json:"volumeClaimTemplate,omitempty"`
+	// *Optional* +
+	//
+	// Object specification for specifying CPU and memory https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/[resource allocations] or limits in the MinIO tenant. +
+	Resources *v1.ResourceRequirements `json:"resources,omitempty"`
+	// *Optional* +
+	//
+	// The filter for the Operator to apply when selecting which nodes on which to deploy pods in the pool. The Operator only selects those nodes whose labels match the specified selector. +
+	//
+	// See the Kubernetes documentation on https://kubernetes.io/docs/concepts/configuration/assign-pod-node/[Assigning Pods to Nodes] for more information.
+	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+	// *Optional* +
+	//
+	// Specify node affinity, pod affinity, and pod anti-affinity for pods in the MinIO pool. +
+	Affinity *v1.Affinity `json:"affinity,omitempty"`
+	// *Optional* +
+	//
+	// Specify one or more https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/[Kubernetes tolerations] to apply to pods deployed in the MinIO pool.
+	Tolerations []v1.Toleration `json:"tolerations,omitempty"`
+	// *Optional* +
+	//
+	// Specify one or more https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/[Kubernetes Topology Spread Constraints] to apply to pods deployed in the MinIO pool.
 	TopologySpreadConstraints []v1.TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`
-	SecurityContext           *v1.PodSecurityContext        `json:"securityContext,omitempty"`
-	ContainerSecurityContext  *v1.SecurityContext           `json:"containerSecurityContext,omitempty"`
-	Annotations               map[string]string             `json:"annotations,omitempty"`
-	Labels                    map[string]string             `json:"labels,omitempty"`
-	RuntimeClassName          *string                       `json:"runtimeClassName,omitempty"`
+	// *Optional* +
+	//
+	// Specify the https://kubernetes.io/docs/tasks/configure-pod-container/security-context/[Security Context] of pods in the pool. The Operator supports only the following pod security fields: +
+	//
+	// * `fsGroup` +
+	//
+	// * `fsGroupChangePolicy` +
+	//
+	// * `runAsGroup` +
+	//
+	// * `runAsNonRoot` +
+	//
+	// * `runAsUser` +
+	SecurityContext *v1.PodSecurityContext `json:"securityContext,omitempty"`
+	// Specify the https://kubernetes.io/docs/tasks/configure-pod-container/security-context/[Security Context] of containers in the pool. The Operator supports only the following container security fields: +
+	//
+	// * `runAsGroup` +
+	//
+	// * `runAsNonRoot` +
+	//
+	// * `runAsUser` +
+	ContainerSecurityContext *v1.SecurityContext `json:"containerSecurityContext,omitempty"`
+	// *Optional* +
+	//
+	// Specify custom labels and annotations to append to the Pool.
+	// *Optional* +
+	//
+	// If provided, use these annotations for the Pool Objects Meta annotations (Statefulset and Pod template)
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// *Optional* +
+	//
+	// If provided, use these labels for the Pool Objects Meta annotations (Statefulset and Pod template)
+	Labels map[string]string `json:"labels,omitempty"`
+	// *Optional* +
+	//
+	// If provided, each pod on the Statefulset will run with the specified RuntimeClassName, for more info https://kubernetes.io/docs/concepts/containers/runtime-class/
+	RuntimeClassName *string `json:"runtimeClassName,omitempty"`
+	// *Optional* +
+	//
+	// If provided, each pod on the Statefulset will get the specified terminationGracePeriodSeconds.
+	TerminationGracePeriodSeconds *int64 `json:"terminationGracePeriodSeconds,omitempty"`
 }
 
 // PoolApplyConfiguration constructs a declarative configuration of the Pool type for use with
@@ -178,5 +250,13 @@ func (b *PoolApplyConfiguration) WithLabels(entries map[string]string) *PoolAppl
 // If called multiple times, the RuntimeClassName field is set to the value of the last call.
 func (b *PoolApplyConfiguration) WithRuntimeClassName(value string) *PoolApplyConfiguration {
 	b.RuntimeClassName = &value
+	return b
+}
+
+// WithTerminationGracePeriodSeconds sets the TerminationGracePeriodSeconds field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the TerminationGracePeriodSeconds field is set to the value of the last call.
+func (b *PoolApplyConfiguration) WithTerminationGracePeriodSeconds(value int64) *PoolApplyConfiguration {
+	b.TerminationGracePeriodSeconds = &value
 	return b
 }

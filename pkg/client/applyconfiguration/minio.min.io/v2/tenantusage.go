@@ -20,12 +20,19 @@ package v2
 
 // TenantUsageApplyConfiguration represents a declarative configuration of the TenantUsage type for use
 // with apply.
+//
+// TenantUsage are metrics regarding the usage and capacity of the tenant
 type TenantUsageApplyConfiguration struct {
-	Capacity    *int64                        `json:"capacity,omitempty"`
-	RawCapacity *int64                        `json:"rawCapacity,omitempty"`
-	Usage       *int64                        `json:"usage,omitempty"`
-	RawUsage    *int64                        `json:"rawUsage,omitempty"`
-	Tiers       []TierUsageApplyConfiguration `json:"tiers,omitempty"`
+	// Capacity the usage capacity of this tenant in bytes.
+	Capacity *int64 `json:"capacity,omitempty"`
+	// Capacity the raw capacity of this tenant in bytes.
+	RawCapacity *int64 `json:"rawCapacity,omitempty"`
+	// Usage is how much data is managed by MinIO in bytes.
+	Usage *int64 `json:"usage,omitempty"`
+	// Usage is the raw usage on disks in bytes.
+	RawUsage *int64 `json:"rawUsage,omitempty"`
+	// Tiers includes the usage of individual tiers in the tenant
+	Tiers []TierUsageApplyConfiguration `json:"tiers,omitempty"`
 }
 
 // TenantUsageApplyConfiguration constructs a declarative configuration of the TenantUsage type for use with

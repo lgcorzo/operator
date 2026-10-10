@@ -20,10 +20,15 @@ package v2
 
 // TierUsageApplyConfiguration represents a declarative configuration of the TierUsage type for use
 // with apply.
+//
+// TierUsage represents the usage from a tier setup by the tenant
 type TierUsageApplyConfiguration struct {
-	Name      *string `json:"Name,omitempty"`
-	Type      *string `json:"Type,omitempty"`
-	TotalSize *int64  `json:"totalSize,omitempty"`
+	// Name of the tier
+	Name *string `json:"Name,omitempty"`
+	// type of the tier
+	Type *string `json:"Type,omitempty"`
+	// TotalSize usage of the tier
+	TotalSize *int64 `json:"totalSize,omitempty"`
 }
 
 // TierUsageApplyConfiguration constructs a declarative configuration of the TierUsage type for use with

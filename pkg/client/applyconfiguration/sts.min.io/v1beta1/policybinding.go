@@ -26,11 +26,17 @@ import (
 
 // PolicyBindingApplyConfiguration represents a declarative configuration of the PolicyBinding type for use
 // with apply.
+//
+// PolicyBinding is a https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/[Kubernetes object] describing a MinIO PolicyBinding.
 type PolicyBindingApplyConfiguration struct {
 	v1.TypeMetaApplyConfiguration    `json:",inline"`
 	*v1.ObjectMetaApplyConfiguration `json:"metadata,omitempty"`
-	Spec                             *PolicyBindingSpecApplyConfiguration   `json:"spec,omitempty"`
-	Status                           *PolicyBindingStatusApplyConfiguration `json:"status,omitempty"`
+	// *Required* +
+	//
+	// The root field for the MinIO PolicyBinding object.
+	Spec *PolicyBindingSpecApplyConfiguration `json:"spec,omitempty"`
+	// Status provides details of the state of the PolicyBinding
+	Status *PolicyBindingStatusApplyConfiguration `json:"status,omitempty"`
 }
 
 // PolicyBinding constructs a declarative configuration of the PolicyBinding type for use with
@@ -43,6 +49,8 @@ func PolicyBinding(name, namespace string) *PolicyBindingApplyConfiguration {
 	b.WithAPIVersion("sts.min.io/v1beta1")
 	return b
 }
+
+func (b PolicyBindingApplyConfiguration) IsApplyConfiguration() {}
 
 // WithKind sets the Kind field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
@@ -218,8 +226,24 @@ func (b *PolicyBindingApplyConfiguration) WithStatus(value *PolicyBindingStatusA
 	return b
 }
 
+// GetKind retrieves the value of the Kind field in the declarative configuration.
+func (b *PolicyBindingApplyConfiguration) GetKind() *string {
+	return b.TypeMetaApplyConfiguration.Kind
+}
+
+// GetAPIVersion retrieves the value of the APIVersion field in the declarative configuration.
+func (b *PolicyBindingApplyConfiguration) GetAPIVersion() *string {
+	return b.TypeMetaApplyConfiguration.APIVersion
+}
+
 // GetName retrieves the value of the Name field in the declarative configuration.
 func (b *PolicyBindingApplyConfiguration) GetName() *string {
 	b.ensureObjectMetaApplyConfigurationExists()
 	return b.ObjectMetaApplyConfiguration.Name
+}
+
+// GetNamespace retrieves the value of the Namespace field in the declarative configuration.
+func (b *PolicyBindingApplyConfiguration) GetNamespace() *string {
+	b.ensureObjectMetaApplyConfigurationExists()
+	return b.ObjectMetaApplyConfiguration.Namespace
 }

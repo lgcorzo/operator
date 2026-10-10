@@ -26,12 +26,18 @@ import (
 
 // TenantApplyConfiguration represents a declarative configuration of the Tenant type for use
 // with apply.
+//
+// Tenant is a https://kubernetes.io/docs/concepts/overview/working-with-objects/kubernetes-objects/[Kubernetes object] describing a MinIO Tenant. +
 type TenantApplyConfiguration struct {
 	v1.TypeMetaApplyConfiguration    `json:",inline"`
 	*v1.ObjectMetaApplyConfiguration `json:"metadata,omitempty"`
 	Scheduler                        *TenantSchedulerApplyConfiguration `json:"scheduler,omitempty"`
-	Spec                             *TenantSpecApplyConfiguration      `json:"spec,omitempty"`
-	Status                           *TenantStatusApplyConfiguration    `json:"status,omitempty"`
+	// *Required* +
+	//
+	// The root field for the MinIO Tenant object.
+	Spec *TenantSpecApplyConfiguration `json:"spec,omitempty"`
+	// Status provides details of the state of the Tenant
+	Status *TenantStatusApplyConfiguration `json:"status,omitempty"`
 }
 
 // Tenant constructs a declarative configuration of the Tenant type for use with
@@ -44,6 +50,8 @@ func Tenant(name, namespace string) *TenantApplyConfiguration {
 	b.WithAPIVersion("minio.min.io/v2")
 	return b
 }
+
+func (b TenantApplyConfiguration) IsApplyConfiguration() {}
 
 // WithKind sets the Kind field in the declarative configuration to the given value
 // and returns the receiver, so that objects can be built by chaining "With" function invocations.
@@ -227,8 +235,24 @@ func (b *TenantApplyConfiguration) WithStatus(value *TenantStatusApplyConfigurat
 	return b
 }
 
+// GetKind retrieves the value of the Kind field in the declarative configuration.
+func (b *TenantApplyConfiguration) GetKind() *string {
+	return b.TypeMetaApplyConfiguration.Kind
+}
+
+// GetAPIVersion retrieves the value of the APIVersion field in the declarative configuration.
+func (b *TenantApplyConfiguration) GetAPIVersion() *string {
+	return b.TypeMetaApplyConfiguration.APIVersion
+}
+
 // GetName retrieves the value of the Name field in the declarative configuration.
 func (b *TenantApplyConfiguration) GetName() *string {
 	b.ensureObjectMetaApplyConfigurationExists()
 	return b.ObjectMetaApplyConfiguration.Name
+}
+
+// GetNamespace retrieves the value of the Namespace field in the declarative configuration.
+func (b *TenantApplyConfiguration) GetNamespace() *string {
+	b.ensureObjectMetaApplyConfigurationExists()
+	return b.ObjectMetaApplyConfiguration.Namespace
 }
