@@ -29,6 +29,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"path/filepath"
 	"reflect"
 	"sort"
 	"strconv"
@@ -276,7 +277,15 @@ func ExtractTar(filesToExtract []string, basePath, tarFileName string) error {
 		}
 		if header.Typeflag == tar.TypeReg {
 			if name := find(filesToExtract, header.Name); name != "" {
-				outFile, err := os.OpenFile(basePath+path.Base(name), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0o777)
+				cleanedBase := filepath.Clean(basePath)
+				targetPath := filepath.Clean(filepath.Join(basePath, name))
+				rel, err := filepath.Rel(cleanedBase, targetPath)
+				if err != nil || strings.HasPrefix(rel, "..") || rel == ".." {
+					return fmt.Errorf("Tar file extraction failed: path traversal detected in file: %s", name)
+				}
+
+				cleanedTarget := filepath.Clean(filepath.Join(basePath, path.Base(name)))
+				outFile, err := os.OpenFile(cleanedTarget, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0o600)
 				if err != nil {
 					return fmt.Errorf("Tar file extraction failed while opening file: %s, at index: %d, with: %w", name, success, err)
 				}

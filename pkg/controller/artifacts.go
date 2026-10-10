@@ -98,7 +98,7 @@ func (c *Controller) fetchArtifacts(tenant *miniov2.Tenant) (latest string, err 
 
 	basePath := updatePath
 
-	if err = os.MkdirAll(basePath, 0o777); err != nil {
+	if err = os.MkdirAll(basePath, 0o700); err != nil {
 		return latest, err
 	}
 
@@ -164,7 +164,7 @@ func (c *Controller) fetchArtifacts(tenant *miniov2.Tenant) (latest string, err 
 		}
 	}
 
-	f, err := os.OpenFile(basePath+"image.tar", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0o777)
+	f, err := os.OpenFile(basePath+"image.tar", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0o600)
 	if err != nil {
 		return latest, err
 	}

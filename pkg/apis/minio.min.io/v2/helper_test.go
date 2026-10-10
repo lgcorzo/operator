@@ -9,6 +9,66 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+import (
+	"archive/tar"
+	"bytes"
+	"os"
+	"path/filepath"
+)
+
+func TestExtractTar(t *testing.T) {
+	tmpDir, err := os.MkdirTemp("", "extract-tar-test-*")
+	require.NoError(t, err)
+	defer os.RemoveAll(tmpDir)
+
+	// Create a tar archive with a normal file and a path traversal attempt
+	tarBuf := new(bytes.Buffer)
+	tw := tar.NewWriter(tarBuf)
+
+	validFileContent := []byte("valid file content")
+	hdr1 := &tar.Header{
+		Name: "testfile.txt",
+		Mode: 0600,
+		Size: int64(len(validFileContent)),
+	}
+	require.NoError(t, tw.WriteHeader(hdr1))
+	_, err = tw.Write(validFileContent)
+	require.NoError(t, err)
+
+	traversalContent := []byte("malicious content")
+	hdr2 := &tar.Header{
+		Name: "../evil.txt",
+		Mode: 0600,
+		Size: int64(len(traversalContent)),
+	}
+	require.NoError(t, tw.WriteHeader(hdr2))
+	_, err = tw.Write(traversalContent)
+	require.NoError(t, err)
+
+	require.NoError(t, tw.Close())
+
+	tarFileName := "test.tar"
+	tarFilePath := filepath.Join(tmpDir, tarFileName)
+	require.NoError(t, os.WriteFile(tarFilePath, tarBuf.Bytes(), 0600))
+
+	basePath := tmpDir + string(os.PathSeparator)
+
+	t.Run("Valid file extraction", func(t *testing.T) {
+		err := ExtractTar([]string{"testfile.txt"}, basePath, tarFileName)
+		require.NoError(t, err)
+
+		extractedContent, err := os.ReadFile(filepath.Join(tmpDir, "testfile.txt"))
+		require.NoError(t, err)
+		assert.Equal(t, validFileContent, extractedContent)
+	})
+
+	t.Run("Path traversal protection", func(t *testing.T) {
+		err := ExtractTar([]string{"../evil.txt"}, basePath, tarFileName)
+		require.Error(t, err)
+		assert.Contains(t, err.Error(), "path traversal detected")
+	})
+}
+
 func TestTenant_GetAccessKeyFromBearerToken(t *testing.T) {
 	mt := Tenant{}
 	mt.EnsureDefaults()
