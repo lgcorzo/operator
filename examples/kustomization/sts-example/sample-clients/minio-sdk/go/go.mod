@@ -1,6 +1,6 @@
 module github.com/minio/operator/sts/example/go
 
-go 1.25.0
+go 1.26.0
 
 require github.com/minio/minio-go/v7 v7.0.33
 
@@ -16,9 +16,9 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/rs/xid v1.4.0 // indirect
 	github.com/sirupsen/logrus v1.9.1 // indirect
-	golang.org/x/crypto v0.51.0 // indirect
-	golang.org/x/net v0.55.0 // indirect
-	golang.org/x/sys v0.45.0 // indirect
-	golang.org/x/text v0.37.0 // indirect
+	golang.org/x/crypto v0.58.0 // indirect
+	golang.org/x/net v0.61.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 	gopkg.in/ini.v1 v1.66.6 // indirect
 )
