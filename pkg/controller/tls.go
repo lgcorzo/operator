@@ -78,7 +78,7 @@ func (c *Controller) getCertificateSecret(ctx context.Context, namespace string,
 // writeCertSecretToFile receives a [corev1.Secret] and save it's contain to the filesystem.
 // returns publicCertPath (filesystem path to the public certificate file), publicKeyPath, (filesystem path to the private key file)
 func (c *Controller) writeCertSecretToFile(tlsCertSecret *corev1.Secret, serviceName string) (string, string) {
-	mkdirerr := os.MkdirAll(fmt.Sprintf("/tmp/%s", serviceName), 0o777)
+	mkdirerr := os.MkdirAll(fmt.Sprintf("/tmp/%s", serviceName), 0o700)
 	if mkdirerr != nil {
 		panic(mkdirerr)
 	}
