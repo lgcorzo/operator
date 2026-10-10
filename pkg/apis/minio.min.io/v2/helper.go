@@ -449,7 +449,7 @@ func (t *Tenant) TemplatedMinIOHosts(hostsTemplate string) (hosts []string) {
 	tmpl, err := template.New("hosts").Parse(hostsTemplate)
 	if err != nil {
 		msg := "Invalid go template for hosts"
-		klog.V(2).Infof(msg)
+		klog.V(2).Info(msg)
 		return hosts
 	}
 	var maxIndex, index int32
@@ -492,7 +492,7 @@ func (t *Tenant) ConsoleServerHost() string {
 func (t *Tenant) MinIOHeadlessServiceHost() string {
 	if t.Spec.Pools[0].Servers == 1 {
 		msg := "Please set the server count > 1"
-		klog.V(2).Infof(msg)
+		klog.V(2).Info(msg)
 		return ""
 	}
 	return fmt.Sprintf("%s.%s.svc.%s", t.MinIOHLServiceName(), t.Namespace, GetClusterDomain())
