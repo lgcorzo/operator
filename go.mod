@@ -4,33 +4,32 @@ go 1.25.0
 
 require (
 	github.com/blang/semver/v4 v4.0.0
-	github.com/docker/cli v29.2.0+incompatible
+	github.com/docker/cli v29.7.2+incompatible
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.2
-	github.com/google/go-containerregistry v0.20.3
+	github.com/google/go-containerregistry v0.22.1
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1
 	github.com/hashicorp/go-version v1.8.0
-	github.com/klauspost/compress v1.18.5 // indirect
+	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/miekg/dns v1.1.72
 	github.com/minio/cli v1.24.2
 	github.com/minio/madmin-go/v3 v3.0.100
 	github.com/minio/minio-go/v7 v7.0.89
 	github.com/minio/pkg v1.7.5
-	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring v0.76.2
 	github.com/prometheus-operator/prometheus-operator/pkg/client v0.76.2
 	github.com/rs/xid v1.6.0 // indirect
 	github.com/secure-io/sio-go v0.3.1 // indirect
 	github.com/stretchr/testify v1.12.1
-	golang.org/x/crypto v0.52.0
-	golang.org/x/net v0.55.0 // indirect
+	golang.org/x/crypto v0.55.0
+	golang.org/x/net v0.58.0 // indirect
 	golang.org/x/oauth2 v0.36.0
 	// Added to include security fix for
 	// https://github.com/golang/go/issues/56152
-	golang.org/x/text v0.37.0 // indirect
+	golang.org/x/text v0.41.0 // indirect
 	golang.org/x/time v0.15.0
 	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/api v0.35.3
@@ -53,7 +52,7 @@ replace (
 require (
 	github.com/go-test/deep v1.1.1
 	github.com/minio/kes-go v0.2.1
-	golang.org/x/mod v0.35.0
+	golang.org/x/mod v0.39.0
 	sigs.k8s.io/controller-runtime v0.20.4
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.0
 )
@@ -61,10 +60,8 @@ require (
 require (
 	aead.dev/mem v0.2.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/containerd/stargz-snapshotter/estargz v0.16.3 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0 // indirect
-	github.com/docker/distribution v2.8.3+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/emicklei/go-restful/v3 v3.12.2 // indirect
 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect
@@ -121,15 +118,14 @@ require (
 	github.com/tinylib/msgp v1.2.5 // indirect
 	github.com/tklauser/go-sysconf v0.3.15 // indirect
 	github.com/tklauser/numcpus v0.10.0 // indirect
-	github.com/vbatts/tar-split v0.12.1 // indirect
 	github.com/x448/float16 v0.8.4 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	go.yaml.in/yaml/v2 v2.4.4 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
-	golang.org/x/sync v0.20.0 // indirect
-	golang.org/x/sys v0.45.0 // indirect
-	golang.org/x/term v0.43.0 // indirect
-	golang.org/x/tools v0.44.0 // indirect
+	golang.org/x/sync v0.22.0 // indirect
+	golang.org/x/sys v0.47.0 // indirect
+	golang.org/x/term v0.45.0 // indirect
+	golang.org/x/tools v0.49.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
