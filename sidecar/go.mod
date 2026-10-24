@@ -4,6 +4,7 @@ go 1.25.0
 
 require (
 	github.com/gorilla/mux v1.8.1
+	github.com/klauspost/compress v1.20.3
 	github.com/lgcorzo/operator v0.0.0-20250423195428-51a1c64002f8
 	github.com/minio/cli v1.24.2
 	github.com/minio/pkg v1.7.5
@@ -45,7 +46,6 @@ require (
 	github.com/grafana/regexp v0.0.0-20250905093917-f7b3be9d1853 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.20.3 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
 	github.com/lufia/plan9stats v0.0.0-20250317134145-8bc96cf8fc35 // indirect
 	github.com/mailru/easyjson v0.9.0 // indirect
