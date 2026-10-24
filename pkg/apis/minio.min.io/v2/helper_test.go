@@ -28,7 +28,7 @@ func TestExtractTar(t *testing.T) {
 	validFileContent := []byte("valid file content")
 	hdr1 := &tar.Header{
 		Name: "testfile.txt",
-		Mode: 0600,
+		Mode: 0o600,
 		Size: int64(len(validFileContent)),
 	}
 	require.NoError(t, tw.WriteHeader(hdr1))
@@ -38,7 +38,7 @@ func TestExtractTar(t *testing.T) {
 	traversalContent := []byte("malicious content")
 	hdr2 := &tar.Header{
 		Name: "../evil.txt",
-		Mode: 0600,
+		Mode: 0o600,
 		Size: int64(len(traversalContent)),
 	}
 	require.NoError(t, tw.WriteHeader(hdr2))
@@ -49,7 +49,7 @@ func TestExtractTar(t *testing.T) {
 
 	tarFileName := "test.tar"
 	tarFilePath := filepath.Join(tmpDir, tarFileName)
-	require.NoError(t, os.WriteFile(tarFilePath, tarBuf.Bytes(), 0600))
+	require.NoError(t, os.WriteFile(tarFilePath, tarBuf.Bytes(), 0o600))
 
 	basePath := tmpDir + string(os.PathSeparator)
 
