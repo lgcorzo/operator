@@ -13,7 +13,7 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/mux v1.8.1
 	github.com/hashicorp/go-version v1.8.0
-	github.com/klauspost/compress v1.20.3 // indirect
+	github.com/klauspost/compress v1.20.3
 	github.com/miekg/dns v1.1.72
 	github.com/minio/cli v1.24.2
 	github.com/minio/madmin-go/v3 v3.0.100
@@ -50,6 +50,7 @@ replace (
 )
 
 require (
+	github.com/docker/distribution v2.8.3+incompatible
 	github.com/go-test/deep v1.1.1
 	github.com/minio/kes-go v0.2.1
 	golang.org/x/mod v0.39.0
@@ -62,6 +63,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0 // indirect
+	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/emicklei/go-restful/v3 v3.12.2 // indirect
 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect
