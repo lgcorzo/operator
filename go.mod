@@ -50,7 +50,6 @@ replace (
 )
 
 require (
-	github.com/distribution/distribution/v3 v3.0.0-rc.3
 	github.com/go-test/deep v1.1.1
 	github.com/minio/kes-go v0.2.1
 	golang.org/x/mod v0.39.0
@@ -63,7 +62,6 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.4.0 // indirect
-	github.com/distribution/reference v0.6.0 // indirect
 	github.com/docker/docker-credential-helpers v0.9.3 // indirect
 	github.com/emicklei/go-restful/v3 v3.12.2 // indirect
 	github.com/evanphx/json-patch/v5 v5.9.11 // indirect

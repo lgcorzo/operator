@@ -8,7 +8,6 @@ package main
 // file from being included in builds.
 
 import (
-	_ "github.com/distribution/distribution/v3"
 	_ "github.com/klauspost/compress"
 	_ "k8s.io/code-generator"
 )
