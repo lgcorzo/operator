@@ -1,19 +1,16 @@
 package v2
 
 import (
+	"archive/tar"
+	"bytes"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-)
-
-import (
-	"archive/tar"
-	"bytes"
-	"os"
-	"path/filepath"
 )
 
 func TestExtractTar(t *testing.T) {
@@ -28,7 +25,7 @@ func TestExtractTar(t *testing.T) {
 	validFileContent := []byte("valid file content")
 	hdr1 := &tar.Header{
 		Name: "testfile.txt",
-		Mode: 0600,
+		Mode: 0o600,
 		Size: int64(len(validFileContent)),
 	}
 	require.NoError(t, tw.WriteHeader(hdr1))
@@ -38,7 +35,7 @@ func TestExtractTar(t *testing.T) {
 	traversalContent := []byte("malicious content")
 	hdr2 := &tar.Header{
 		Name: "../evil.txt",
-		Mode: 0600,
+		Mode: 0o600,
 		Size: int64(len(traversalContent)),
 	}
 	require.NoError(t, tw.WriteHeader(hdr2))
@@ -49,7 +46,7 @@ func TestExtractTar(t *testing.T) {
 
 	tarFileName := "test.tar"
 	tarFilePath := filepath.Join(tmpDir, tarFileName)
-	require.NoError(t, os.WriteFile(tarFilePath, tarBuf.Bytes(), 0600))
+	require.NoError(t, os.WriteFile(tarFilePath, tarBuf.Bytes(), 0o600))
 
 	basePath := tmpDir + string(os.PathSeparator)
 
