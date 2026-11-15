@@ -1,3 +1,13 @@
+# Security Policy — `lgcorzo/operator` (Maintained Fork)
+
+> **Fork Vulnerability Reporting (`@lgcorzo`):**
+> This repository is a maintained fork of [minio/operator](https://github.com/minio/operator).
+> - **Do not report vulnerabilities specific to this fork's patches, workflows, or builds to the upstream maintainers.**
+> - Please report security issues for `lgcorzo/operator` via **[GitHub Security Advisories](https://github.com/lgcorzo/operator/security/advisories/new)**.
+> - For vulnerabilities reproducible in the unmodified upstream project, see the preserved upstream security policy below.
+
+---
+
 # Security Policy
 
 ## Supported Versions
