@@ -20,7 +20,7 @@ This repository (`lgcorzo/operator`) is actively maintained as a core component 
 
 1. **Full Supply-Chain Autonomy:** Complete independence from upstream licensing shifts or unannounced deprecation notices, ensuring perpetual operational stability.
 2. **Dark Gravity AI Integration:** Core component powering high-throughput declarative storage orchestration, tenant CRD automation, and secure AI pipeline storage.
-3. **Compliance & Security Standards:** Rigorous sovereign maintenance aligned with EU AI Act, SOC 2 Type II, ISO 25059, and zero-CVE SLAs.
+3. **Auditability & Security Maintenance:** Ongoing vulnerability scanning, security patching, and signed builds designed to facilitate auditing and traceability.
 4. **Ecosystem Interoperability:** Direct compatibility across all 38 repositories in the `@lgcorzo` sovereign ecosystem (MinIO Server, MC, KES, Operator, DirectPV, Console, SIMD libraries, etc.).
 
 ---
@@ -105,3 +105,10 @@ helm install operator minio/operator
 ## License
 
 GNU AGPLv3 - see [LICENSE](LICENSE) for details.
+
+---
+
+### Fork Maintenance & Agent Transparency
+
+- **Changes vs. Upstream:** Security dependency updates, CI/CD workflow fixes, and CodeQL remediation are tracked in the [commit history](../../commits) and [Pull Requests](../../pulls?q=is%3Apr).
+- **Agent Tagging (`[agent]`):** Commits and pull requests generated automatically by agents in the Dark Gravity pipeline are prefixed with `[agent]` to distinguish automated maintenance from manual work.
