@@ -5,6 +5,8 @@
 
 The MinIO Kubernetes Operator provides a declarative custom resource definition interface for creating and managing MinIO tenants on Kubernetes clusters.
 
+Maintained fork of [minio/operator](https://github.com/minio/operator) (archived upstream). It applies security patches and maintenance fixes on top of upstream. Part of the [Dark Gravity](https://github.com/lgcorzo/rust_CACD_autonomous_factory) factory. License: AGPLv3.
+
 > [!NOTE]
 > This repository is maintained under the **@lgcorzo** sovereign ecosystem as part of the **Dark Gravity** autonomous AI factory infrastructure.
 
